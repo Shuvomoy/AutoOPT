@@ -1,0 +1,60 @@
+schema_version: 1
+run_id: "{{RUN_ID}}"
+repository_root: {{REPOSITORY_ROOT_JSON}}
+run_directory: {{RUN_DIRECTORY_JSON}}
+target_id: ""
+started_at: "{{STARTED_AT}}"
+earliest_finalization_at: "{{EARLIEST_FINALIZATION_AT}}"
+last_checkpoint_at: "{{STARTED_AT}}"
+capability:
+  requested_policy: "strongest available Codex GPT and that model's highest supported reasoning setting"
+  available_models: []
+  resolved_strongest_model: ""
+  selected_model: ""
+  available_reasoning_for_selected_model: []
+  resolved_highest_reasoning: ""
+  selected_reasoning: ""
+  capability_source: ""
+  model_selection_basis: ""
+  reasoning_selection_basis: ""
+  evidence_artifact: ""
+  evidence_sha256: ""
+  verified: ""
+  available_concurrency: 0
+  peak_concurrency: 0
+  downgrade: "none"
+policies:
+  public_search: "background-and-standard-named-theorems-only; no exact-target, solution, or open-status retrieval"
+  local_sources: "allowed, including exact-target repository material"
+  external_consultation: "disabled without separate user authorization"
+  max_execution_minutes: 180
+timing:
+  minimum_hours: 8
+  active_work_seconds: 0
+  paused_seconds: 0
+  last_resumed_at: "{{STARTED_AT}}"
+  productive_rounds_after_minimum: 0
+  terminal_obstruction_rounds: 0
+status:
+  value: "prepared"
+  terminal_at: ""
+  stopping_reason: ""
+  exact_remaining_gap: ""
+  terminal_obstruction_id: ""
+  no_defensible_next_step: false
+  interruption_kind: ""
+  interruption_evidence_artifact: ""
+completion:
+  candidate_version: ""
+  candidate_artifact: ""
+  candidate_sha256: ""
+  contract_version: ""
+  contract_sha256: ""
+  last_material_repair_at: ""
+audits:
+  required_fresh: 2
+  completed_fresh: 0
+managed_repository:
+  detected: {{MANAGED_DETECTED}}
+  detection_basis: {{MANAGED_DETECTION_BASIS_JSON}}
+  handoff_completed: false

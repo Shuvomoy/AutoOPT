@@ -1,0 +1,4 @@
+interface:
+  display_name: "BnB-PEP Skill"
+  short_description: "Derive and code BnB-PEP instances"
+  default_prompt: "Use $bnb-pep-skill to onboard me, check my Julia environment, and then formalize a BnB-PEP instance."

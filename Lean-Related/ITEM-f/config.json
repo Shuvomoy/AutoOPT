@@ -1,0 +1,26 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "ITEMf.finiteInterpolation",
+    "ITEMf.oneStepMap",
+    "ITEMf.orbitComparison",
+    "ITEMf.targetAngle",
+    "ITEMf.shootingIffAdmissible",
+    "ITEMf.coefficientsExistUnique",
+    "ITEMf.involutionSymmetry",
+    "ITEMf.explicitRate",
+    "ITEMf.transformedMemF0",
+    "ITEMf.threePointIdentity",
+    "ITEMf.coordinateRelations",
+    "ITEMf.normIdentities",
+    "ITEMf.lyapunovMonotone",
+    "ITEMf.convergence"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

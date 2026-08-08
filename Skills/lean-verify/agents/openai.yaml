@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean Verify"
+  short_description: "Optimization proofs to checked Lean"
+  default_prompt: "Use $lean-verify to turn optimization theorem/proof sources, certificate data, or an existing Lean project into checked Lean/Lake verification artifacts."

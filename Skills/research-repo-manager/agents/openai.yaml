@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Repo Manager"
+  short_description: "Manage applied-math research repos with claim/evidence and reproducibility tracking"
+  default_prompt: "Use $research-repo-manager to manage this applied-math or optimization research repository: initialize or refresh planning files, catalog immutable sources, maintain claim/evidence and experiment/reproducibility ledgers, summarize current findings and next sessions, audit source drift, or compact non-core artifacts through an approval-gated archive plan."

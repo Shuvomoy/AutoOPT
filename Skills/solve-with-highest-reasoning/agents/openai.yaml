@@ -1,0 +1,6 @@
+interface:
+  display_name: "Highest-Reasoning Research Solver"
+  short_description: "Run a rigorous eight-hour research campaign"
+  default_prompt: "/goal Use $solve-with-highest-reasoning with the strongest available Codex GPT and its highest supported reasoning setting for at least eight checkpointed active-work hours and no earlier than eight wall-clock hours after campaign initialization; finish with either a complete audited resolution or an exact-gap report after its productive-stop conditions are satisfied."
+policy:
+  allow_implicit_invocation: false

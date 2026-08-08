@@ -1,0 +1,22 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "LemniAcc.finite_interpolation",
+    "LemniAcc.recurrence_existsUnique",
+    "LemniAcc.omega_bounds",
+    "LemniAcc.iterates",
+    "LemniAcc.lyapunov_terminal",
+    "LemniAcc.lyapunov_decrement",
+    "LemniAcc.gradient_rate",
+    "LemniAcc.functionValue_rate",
+    "LemniAcc.Lemniscatic.sigma_identities",
+    "LemniAcc.continuousTime_lyapunov"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}
