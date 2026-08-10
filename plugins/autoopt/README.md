@@ -72,14 +72,14 @@ solver or Lean check succeeded.
 When a prerequisite is unavailable, the applicable skill stops and explains
 what is missing. It does not silently select a different route.
 
-## Installing from the local marketplace
+## Installing from GitHub with Codex
 
-From the distribution repository root, register its marketplace and install the
-plugin:
+After the `v0.1.0` release is published, register the public AutoOPT marketplace
+and install the plugin:
 
 ```console
-codex plugin marketplace add .
-codex plugin add autoopt@autoopt-local
+codex plugin marketplace add Shuvomoy/AutoOPT --ref v0.1.0
+codex plugin add autoopt@autoopt
 ```
 
 Start a new Codex task after installation or reinstallation so that the task
@@ -87,9 +87,18 @@ loads the current plugin contents. During development, invoke AutoOPT through
 the plugin-qualified entry shown by Codex to ensure that a separately installed
 standalone skill is not masking the packaged copy.
 
-Plugin developers must update the portable and Codex manifest versions
-together. From the distribution repository root, use the atomic updater,
-validate the complete package, reinstall it, and then start a new task:
+For local development in the canonical standalone `AutoOPT-plugin`
+distribution wrapper, register that wrapper's `autoopt-local` marketplace:
+
+```console
+codex plugin marketplace add .
+codex plugin add autoopt@autoopt-local
+```
+
+Plugin maintainers must update the portable and Codex manifest versions
+together. From the canonical distribution-wrapper root, use the atomic updater,
+validate the complete package, reinstall it through `autoopt-local`, and then
+start a new task:
 
 ```console
 python3 scripts/update_autoopt_plugin_cachebuster.py

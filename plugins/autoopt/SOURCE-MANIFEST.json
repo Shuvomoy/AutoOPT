@@ -627,7 +627,7 @@
     "solve-with-highest-reasoning"
   ],
   "source": {
-    "release_input_revision": "ee6b54861dc17c8805d3424d0005fdc0828c9976",
+    "release_input_revision": "74e6b1a1aaa3f52d28b69091e31d33e239d97d3a",
     "release_input_revision_known": true,
     "release_input_surface": {
       "excluded_generated_outputs": [
