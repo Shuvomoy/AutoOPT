@@ -122,9 +122,6 @@ pipeline with:
 $autoopt:auto-opt
 ```
 
-The plugin packages the full AutoOPT skill set, including `bnb-pep-skill`; do
-not install `bnb-pep-skill` separately.
-
 ## Build the Lean projects
 
 Each project uses its checked-in `lean-toolchain` and `lake-manifest.json`:
