@@ -51,29 +51,63 @@ and mathlib 4.32.0:
 Each project includes its Lean source, pinned Lake environment, theorem-facing
 `Challenge.lean` and `Solution.lean` wrappers, and an `AxiomAudit.lean` target.
 
-
-
 **Miscellaneous/Self-contained analytical proofs**. [`Selfcontained-PEP-proofs-for-Lemniscate-and-Itemf/`](Selfcontained-PEP-proofs-for-Lemniscate-and-Itemf/) folder located in the `Miscellaneous` folder
 contains self-contained PEP-based convergence proofs for  lemniscate acceleration and ITEM-f.  These documents are self-contained: they state the algorithms and rates, construct their parameters,
 formulate the corresponding PEPs, and give the analytical dual certificates
 and their feasibility proofs. Note that in the paper we provide the slightly more compact proofs based on Lyapunov analysis.
 
-## Getting started
+## Installing `AutoOPT`
 
-### Install the packaged Codex plugin (recommended)
+You can install `AutoOPT` skills in two ways: (i) by installing the skills manually, 
+(ii) by installing the `AutoOPT` plugin (new!). 
 
-The packaged `autoopt` plugin is the recommended, portable installation for
+### Runtime prerequisites
+
+`AutoOPT` requires the following prerequisites. You can either install them before
+installing `AutoOPT`, or  install `AutoOPT` 
+first, and then from the agent (e.g., `Codex`)  just ask it to install the prerequisites).
+
+The prerequisites are:
+
+* OpenAI Codex (or a similar agent)
+* Python 3.10 or newer 
+* Julia 1.10 or newer, and Julia packages JuMP, Ipopt, Clarabel, Mosek, Gurobi, KNITRO (note that commerical solvers Mosek, Gurobi, KNITRO are optional)
+* Chrome extension Codex (or browser extension the agent in consideration)
+* Lean, Lake, the required mathlib project
+* Comparator or Landrun tooling 
+
+### Install the AutoOPT skills manually
+
+First, please see the
+[Skills/README.md](Skills/README.md) for more details about the skills.
+
+Copy or symlink the required directories from [`Skills/`](Skills/) into a
+location scanned by your agent. For Codex, use `$HOME/.agents/skills/` for
+user-wide installation or `<repository-root>/.agents/skills/` for
+repository-scoped installation; for Claude Code, use `~/.claude/skills/` for
+user-wide installation. In Codex CLI or the IDE extension, run `/skills` to
+confirm discovery, invoke a skill as `$skill-name`, and restart Codex if an
+installed skill does not appear.
+
+### *NEW!* Install the packaged Codex plugin
+
+We have made a plugin for Codex based on the new plugin standard!
+
+The packaged `autoopt` plugin is the portable installation for
 the Codex app and CLI. Codex plugin availability does not include the IDE
-extension. Review the plugin's [runtime prerequisites](plugins/autoopt/README.md#runtime-prerequisites)
-before installing it.
+extension. 
 
-After the `v0.1.0` release is published, add the AutoOPT marketplace and
-install the plugin:
+From any directory, run these two
+commands to install the plugin directly from this GitHub repository:
 
 ```sh
-codex plugin marketplace add Shuvomoy/AutoOPT --ref v0.1.0
+codex plugin marketplace add https://github.com/Shuvomoy/AutoOPT
 codex plugin add autoopt@autoopt
 ```
+
+The first command asks Codex to fetch and register the marketplace stored in
+this repository. The second command installs the `autoopt` plugin from that
+marketplace.
 
 Verify the installation:
 
@@ -91,22 +125,7 @@ $autoopt:auto-opt
 The plugin packages the full AutoOPT skill set, including `bnb-pep-skill`; do
 not install `bnb-pep-skill` separately.
 
-### Install the raw skills manually (advanced/legacy)
-
-Manual raw-skill installation remains available for legacy setups, the Codex
-IDE extension, and agents without packaged-plugin support. See the
-[`Skills/` quick start](Skills/README.md#quick-start) for the complete companion-skill
-and runtime requirements.
-
-Copy or symlink the required directories from [`Skills/`](Skills/) into a
-location scanned by your agent. For Codex, use `$HOME/.agents/skills/` for
-user-wide installation or `<repository-root>/.agents/skills/` for
-repository-scoped installation; for Claude Code, use `~/.claude/skills/` for
-user-wide installation. In Codex CLI or the IDE extension, run `/skills` to
-confirm discovery, invoke a skill as `$skill-name`, and restart Codex if an
-installed skill does not appear.
-
-### Build the Lean projects
+## Build the Lean projects
 
 Each project uses its checked-in `lean-toolchain` and `lake-manifest.json`:
 
@@ -119,6 +138,8 @@ lake build
 cd Lean-Related/ITEM-f
 lake build
 ```
+
+
 
 
 ## Reporting issues

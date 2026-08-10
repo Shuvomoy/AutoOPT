@@ -74,13 +74,17 @@ what is missing. It does not silently select a different route.
 
 ## Installing from GitHub with Codex
 
-After the `v0.1.0` release is published, register the public AutoOPT marketplace
-and install the plugin:
+No download or manual clone is required. From any directory, run these two
+commands to install the plugin directly from the public GitHub repository:
 
 ```console
-codex plugin marketplace add Shuvomoy/AutoOPT --ref v0.1.0
+codex plugin marketplace add https://github.com/Shuvomoy/AutoOPT
 codex plugin add autoopt@autoopt
 ```
+
+The first command asks Codex to fetch and register the marketplace stored in
+the repository. The second command installs the `autoopt` plugin from that
+marketplace.
 
 Start a new Codex task after installation or reinstallation so that the task
 loads the current plugin contents. During development, invoke AutoOPT through
