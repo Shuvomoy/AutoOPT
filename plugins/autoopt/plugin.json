@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "autoopt",
+  "version": "0.1.0",
+  "description": "Human-gated, repository-grounded automation for optimization research.",
+  "author": {
+    "name": "Heechang Kim, Ernest Ryu, and Shuvomoy Das Gupta"
+  },
+  "homepage": "https://github.com/Shuvomoy/AutoOPT",
+  "repository": "https://github.com/Shuvomoy/AutoOPT",
+  "license": "Apache-2.0",
+  "keywords": [
+    "optimization",
+    "research-automation",
+    "performance-estimation",
+    "symbolic-reasoning",
+    "lean"
+  ]
+}

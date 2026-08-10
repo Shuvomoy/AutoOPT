@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChatGPT Pro Handoff"
+  short_description: "Package full or directed Pro handoffs."
+  default_prompt: "Use $chatgpt-pro-handoff to package a full or directed Chrome handoff, select GPT-5.6 Sol with Intelligence set to Pro, confirm before upload, and import the marked response."

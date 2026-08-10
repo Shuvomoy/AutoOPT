@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontier LLM Consult"
+  short_description: "Route external or native frontier research work"
+  default_prompt: "Use $frontier-llm-consult to route this research task through the default external ChatGPT Pro session or an explicitly invoked native highest-reasoning Codex campaign with the required approval and evidence gates."

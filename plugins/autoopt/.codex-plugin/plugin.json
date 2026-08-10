@@ -1,0 +1,35 @@
+{
+  "name": "autoopt",
+  "version": "0.1.0",
+  "description": "Human-gated, repository-grounded automation for optimization research.",
+  "author": {
+    "name": "Heechang Kim, Ernest Ryu, and Shuvomoy Das Gupta"
+  },
+  "homepage": "https://github.com/Shuvomoy/AutoOPT",
+  "repository": "https://github.com/Shuvomoy/AutoOPT",
+  "license": "Apache-2.0",
+  "keywords": [
+    "optimization",
+    "research-automation",
+    "performance-estimation",
+    "symbolic-reasoning",
+    "lean"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AutoOPT",
+    "shortDescription": "Human-gated optimization research pipeline",
+    "longDescription": "AutoOPT coordinates repository grounding, BnB-PEP design, approved symbolic discovery, and Lean verification with explicit human gates and durable evidence.",
+    "developerName": "AutoOPT Authors",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Start a human-gated AutoOPT pipeline in this research repository.",
+      "Formalize this optimization method as a BnB-PEP instance.",
+      "Verify this optimization theorem and certificate in Lean."
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChatGPT Pro Session"
+  short_description: "Reuse one ChatGPT Pro context session."
+  default_prompt: "Use $chatgpt-pro-session to start or continue a reusable ChatGPT Pro session with the current project context."

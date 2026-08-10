@@ -60,7 +60,43 @@ and their feasibility proofs. Note that in the paper we provide the slightly mor
 
 ## Getting started
 
-### Install the skills
+### Install the packaged Codex plugin (recommended)
+
+The packaged `autoopt` plugin is the recommended, portable installation for
+the Codex app and CLI. Codex plugin availability does not include the IDE
+extension. Review the plugin's [runtime prerequisites](plugins/autoopt/README.md#runtime-prerequisites)
+before installing it.
+
+After the `v0.1.0` release is published, add the AutoOPT marketplace and
+install the plugin:
+
+```sh
+codex plugin marketplace add Shuvomoy/AutoOPT --ref v0.1.0
+codex plugin add autoopt@autoopt
+```
+
+Verify the installation:
+
+```sh
+codex plugin list --marketplace autoopt --json
+```
+
+Start a new Codex task so that the installed plugin is loaded, then invoke the
+pipeline with:
+
+```text
+$autoopt:auto-opt
+```
+
+The plugin packages the full AutoOPT skill set, including `bnb-pep-skill`; do
+not install `bnb-pep-skill` separately.
+
+### Install the raw skills manually (advanced/legacy)
+
+Manual raw-skill installation remains available for legacy setups, the Codex
+IDE extension, and agents without packaged-plugin support. See the
+[`Skills/` quick start](Skills/README.md#quick-start) for the complete companion-skill
+and runtime requirements.
 
 Copy or symlink the required directories from [`Skills/`](Skills/) into a
 location scanned by your agent. For Codex, use `$HOME/.agents/skills/` for

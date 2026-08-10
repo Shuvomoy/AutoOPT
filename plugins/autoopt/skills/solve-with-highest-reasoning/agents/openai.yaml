@@ -1,0 +1,6 @@
+interface:
+  display_name: "Highest-Reasoning Research Solver"
+  short_description: "Run a rigorous configurable-duration campaign"
+  default_prompt: "Use $solve-with-highest-reasoning; before initialization, resolve and confirm the eight-hour default or an explicitly supplied custom duration, then run the audited highest-capability campaign."
+policy:
+  allow_implicit_invocation: false

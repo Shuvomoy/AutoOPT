@@ -1,0 +1,664 @@
+{
+  "build": {
+    "agent_plugins_schema": "packaging/schemas/agent-plugins-1.0.0-plugin.schema.json",
+    "agent_plugins_schema_sha256": "0a4aad95ce337878ad38802ebf0daa3fde76abe3f65400c86bcbb1ec0b3ab883",
+    "configuration": "packaging/skill-set.json",
+    "configuration_sha256": "177fa8b3c11af3e6304e8b0c68bc261e9691b8e5c209e3da7821133c0301ba48",
+    "overlay": "packaging/overlays/portable-paths.json",
+    "overlay_revision": "portable-package-v3",
+    "overlay_sha256": "d3546b032fe73d8f6920149a95cfccfaa352c9974cd711920f05ce823f933f1f",
+    "skill_sync_audit": "passed",
+    "tool": "scripts/build_autoopt_plugin.py"
+  },
+  "files": [
+    {
+      "destination": "assets/autoopt-pipeline.png",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "ed21110fd4333d0e0ac9ab33b2e4390c51f3fd0dcbf3ad85ae6dfb39f410bfb7",
+      "source": "Skills/assets/autoopt-pipeline.png",
+      "source_sha256": "ed21110fd4333d0e0ac9ab33b2e4390c51f3fd0dcbf3ad85ae6dfb39f410bfb7"
+    },
+    {
+      "destination": "skills/auto-opt/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "66035265c25b6ffeaffeb29532ee5bb9fa99775c2528f6c213ec4806ce70f443",
+      "source": "Skills/auto-opt/SKILL.md",
+      "source_sha256": "66035265c25b6ffeaffeb29532ee5bb9fa99775c2528f6c213ec4806ce70f443"
+    },
+    {
+      "destination": "skills/auto-opt/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "5de2a0d8e05ccd77d59755e6a34d3dfbe22b34b46f60cff8dbd84b42b2f2823f",
+      "source": "Skills/auto-opt/agents/openai.yaml",
+      "source_sha256": "5de2a0d8e05ccd77d59755e6a34d3dfbe22b34b46f60cff8dbd84b42b2f2823f"
+    },
+    {
+      "destination": "skills/auto-opt/references/stage-handoff-protocol.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "eaa33a3918617644206904f5b5ce79049ceeb38fceffa9d61f68b46025872228",
+      "source": "Skills/auto-opt/references/stage-handoff-protocol.md",
+      "source_sha256": "eaa33a3918617644206904f5b5ce79049ceeb38fceffa9d61f68b46025872228"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "c033398b04e67c7201efae9e6d81475ce6b76b0a5dc998c1590938a0359d5736",
+      "source": "Skills/bnb-pep-skill/SKILL.md",
+      "source_sha256": "c033398b04e67c7201efae9e6d81475ce6b76b0a5dc998c1590938a0359d5736"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "c76e7afc50e1850b79d6f3ef66b9fd64a7cd1400757970520184487aa9949c40",
+      "source": "Skills/bnb-pep-skill/agents/openai.yaml",
+      "source_sha256": "c76e7afc50e1850b79d6f3ef66b9fd64a7cd1400757970520184487aa9949c40"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/bnb-pep-methodology.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "f1b82a52d89aeca3965220062c68956c20efb176a36a5d718961206c5d5c9745",
+      "source": "Skills/bnb-pep-skill/references/bnb-pep-methodology.md",
+      "source_sha256": "f1b82a52d89aeca3965220062c68956c20efb176a36a5d718961206c5d5c9745"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/composite-primitives.md",
+      "mode": "0644",
+      "overlays": [
+        "portable-package-v3"
+      ],
+      "packaged_sha256": "f1696584771bbac6ac8c748ff304498d37eb157bfb5079939d6dfb857a8918e4",
+      "source": "Skills/bnb-pep-skill/references/composite-primitives.md",
+      "source_sha256": "2ff3db8ea0b816976045e3bda4e3e9a48e310112b12e79a7403f733a2c86d540"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/derivation-template.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "713d16b7f4a27a7fa28be78486c7ffd903a499661aa825b1bc6b39e6472bdf5a",
+      "source": "Skills/bnb-pep-skill/references/derivation-template.md",
+      "source_sha256": "713d16b7f4a27a7fa28be78486c7ffd903a499661aa825b1bc6b39e6472bdf5a"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/formalization-schema.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "45b2c92ff1e05931f39f74976ba3e8766ba359621b9fbe4fecd5366cf2785b72",
+      "source": "Skills/bnb-pep-skill/references/formalization-schema.md",
+      "source_sha256": "45b2c92ff1e05931f39f74976ba3e8766ba359621b9fbe4fecd5366cf2785b72"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/interpolation-conditions.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "5a3fb7c4a37eba6f2ebb44d3606479246a77a8fa875c6880ad8fa4220c52b2a2",
+      "source": "Skills/bnb-pep-skill/references/interpolation-conditions.md",
+      "source_sha256": "5a3fb7c4a37eba6f2ebb44d3606479246a77a8fa875c6880ad8fa4220c52b2a2"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/julia-implementation-guide.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "14bcfb4d82f162e283511f9c32f5e52544a5e9e563fc7102d69931a989840623",
+      "source": "Skills/bnb-pep-skill/references/julia-implementation-guide.md",
+      "source_sha256": "14bcfb4d82f162e283511f9c32f5e52544a5e9e563fc7102d69931a989840623"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/onboarding.md",
+      "mode": "0644",
+      "overlays": [
+        "portable-package-v3"
+      ],
+      "packaged_sha256": "8a0ee7afe26328f59792fcb44596dced182f6759454e870d1ba378de09632324",
+      "source": "Skills/bnb-pep-skill/references/onboarding.md",
+      "source_sha256": "8ffea32daf05ab1c7b4b372f1400d5ebf1e72e4d5b25719dc93833c1c8e1db92"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/smoke-tests.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "1ca33b5e7ca850b63fd301d90ae38c3587b91334f71f32981cb27e738893e942",
+      "source": "Skills/bnb-pep-skill/references/smoke-tests.md",
+      "source_sha256": "1ca33b5e7ca850b63fd301d90ae38c3587b91334f71f32981cb27e738893e942"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/stage3-global-optimization.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "ee35b7be45b73b85a5f5bb3135da8e960ecca788f08500c434bdacfd3ffa7659",
+      "source": "Skills/bnb-pep-skill/references/stage3-global-optimization.md",
+      "source_sha256": "ee35b7be45b73b85a5f5bb3135da8e960ecca788f08500c434bdacfd3ffa7659"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/references/supported-setups.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "89b781894b2ee8ebc2c418141e6527c53af5083e58c491d5cc2c397a5f7fcf24",
+      "source": "Skills/bnb-pep-skill/references/supported-setups.md",
+      "source_sha256": "89b781894b2ee8ebc2c418141e6527c53af5083e58c491d5cc2c397a5f7fcf24"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/scripts/check_julia_environment.jl",
+      "mode": "0755",
+      "overlays": [],
+      "packaged_sha256": "5938f7716c4dd56bee0a896f84947d672f066291222169291ac8016f6f26a947",
+      "source": "Skills/bnb-pep-skill/scripts/check_julia_environment.jl",
+      "source_sha256": "5938f7716c4dd56bee0a896f84947d672f066291222169291ac8016f6f26a947"
+    },
+    {
+      "destination": "skills/bnb-pep-skill/scripts/validate_generated_instance.py",
+      "mode": "0755",
+      "overlays": [],
+      "packaged_sha256": "4ca4e5fd017f7ddcbd1828b18fb88aee51e77fddcf0a11c9f1656935def857ee",
+      "source": "Skills/bnb-pep-skill/scripts/validate_generated_instance.py",
+      "source_sha256": "4ca4e5fd017f7ddcbd1828b18fb88aee51e77fddcf0a11c9f1656935def857ee"
+    },
+    {
+      "destination": "skills/chatgpt-pro-handoff/SKILL.md",
+      "mode": "0644",
+      "overlays": [
+        "portable-package-v3"
+      ],
+      "packaged_sha256": "45051ce1e3e1b75cf65c50aad4393f8a4449be44171403416570094a5679d254",
+      "source": "Skills/chatgpt-pro-handoff/SKILL.md",
+      "source_sha256": "38731c0fc3e9f6400174f0d8a1ad8638795bbfd9f563a46c17af6379a64d41dd"
+    },
+    {
+      "destination": "skills/chatgpt-pro-handoff/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "b02b57940f6fb07b395333f43bf22a887719400fee550cc7fd446b54e907b5b1",
+      "source": "Skills/chatgpt-pro-handoff/agents/openai.yaml",
+      "source_sha256": "b02b57940f6fb07b395333f43bf22a887719400fee550cc7fd446b54e907b5b1"
+    },
+    {
+      "destination": "skills/chatgpt-pro-handoff/scripts/chatgpt_handoff.py",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "8ed5b84c0bf540de0a682a21243672276a4839ff6e7ffff3baf921932f536ee5",
+      "source": "Skills/chatgpt-pro-handoff/scripts/chatgpt_handoff.py",
+      "source_sha256": "8ed5b84c0bf540de0a682a21243672276a4839ff6e7ffff3baf921932f536ee5"
+    },
+    {
+      "destination": "skills/chatgpt-pro-session/SKILL.md",
+      "mode": "0644",
+      "overlays": [
+        "portable-package-v3"
+      ],
+      "packaged_sha256": "86acfbae168d4700c7ced8eeab56b34ac07a4fe1f03f25767c44751f4d03768f",
+      "source": "Skills/chatgpt-pro-session/SKILL.md",
+      "source_sha256": "46aa1fc9e04907de053b3f6a81bce4196b3bab32d5b917da6ed7e1d480b5dad4"
+    },
+    {
+      "destination": "skills/chatgpt-pro-session/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "fe5c1208cd8cdd29944b5832eaa57e80b791fe3f00832af4d6a29be99645acb6",
+      "source": "Skills/chatgpt-pro-session/agents/openai.yaml",
+      "source_sha256": "fe5c1208cd8cdd29944b5832eaa57e80b791fe3f00832af4d6a29be99645acb6"
+    },
+    {
+      "destination": "skills/chatgpt-pro-session/scripts/session_state.py",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "7024571990f06134a588cd24334d9ef90419ff8939d2398c74ebe89647abd5e5",
+      "source": "Skills/chatgpt-pro-session/scripts/session_state.py",
+      "source_sha256": "7024571990f06134a588cd24334d9ef90419ff8939d2398c74ebe89647abd5e5"
+    },
+    {
+      "destination": "skills/frontier-llm-consult/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "ca8b1833d43b876f7358765f45435ea438746b83957080c610421b2d7d202a34",
+      "source": "Skills/frontier-llm-consult/SKILL.md",
+      "source_sha256": "ca8b1833d43b876f7358765f45435ea438746b83957080c610421b2d7d202a34"
+    },
+    {
+      "destination": "skills/frontier-llm-consult/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "7b2090b52e951398c2ec2a29b5e2ba3678f35355b940a1ed46224a9e43f847a7",
+      "source": "Skills/frontier-llm-consult/agents/openai.yaml",
+      "source_sha256": "7b2090b52e951398c2ec2a29b5e2ba3678f35355b940a1ed46224a9e43f847a7"
+    },
+    {
+      "destination": "skills/lean-verify/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "deb019aec4f780ce4567dc0e3c6f239990e813c3f60ddb133484b0ea83bf1f3a",
+      "source": "Skills/lean-verify/SKILL.md",
+      "source_sha256": "deb019aec4f780ce4567dc0e3c6f239990e813c3f60ddb133484b0ea83bf1f3a"
+    },
+    {
+      "destination": "skills/lean-verify/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "5bfe68de9239632053e37ad39bdac39ec5aff1a37c295cac7481615fcbd7f03d",
+      "source": "Skills/lean-verify/agents/openai.yaml",
+      "source_sha256": "5bfe68de9239632053e37ad39bdac39ec5aff1a37c295cac7481615fcbd7f03d"
+    },
+    {
+      "destination": "skills/lean-verify/references/chatgpt-pro-blueprint-to-agentic-lean.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4d99d573aa4bb69bf73cd2e867b2200b7745306cbbfc4a0953a538d80ddec975",
+      "source": "Skills/lean-verify/references/chatgpt-pro-blueprint-to-agentic-lean.md",
+      "source_sha256": "4d99d573aa4bb69bf73cd2e867b2200b7745306cbbfc4a0953a538d80ddec975"
+    },
+    {
+      "destination": "skills/lean-verify/references/chatgpt-pro-consultation-protocol.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "585988059b03ec276ef5cbedfc7cdb956e96598d5af04f7da5cb25c1f7b2f3b4",
+      "source": "Skills/lean-verify/references/chatgpt-pro-consultation-protocol.md",
+      "source_sha256": "585988059b03ec276ef5cbedfc7cdb956e96598d5af04f7da5cb25c1f7b2f3b4"
+    },
+    {
+      "destination": "skills/lean-verify/references/comparator-platforms.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4be9db024e2ab3fe08b30cf65e4c8ead618b4124b8f65c9fd959fabe2b78dcd6",
+      "source": "Skills/lean-verify/references/comparator-platforms.md",
+      "source_sha256": "4be9db024e2ab3fe08b30cf65e4c8ead618b4124b8f65c9fd959fabe2b78dcd6"
+    },
+    {
+      "destination": "skills/lean-verify/references/lean-build-loop.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "0463c0a3484d5a227f63c8f8c2b319b9963ac98e0c17721f45f763a7e310a169",
+      "source": "Skills/lean-verify/references/lean-build-loop.md",
+      "source_sha256": "0463c0a3484d5a227f63c8f8c2b319b9963ac98e0c17721f45f763a7e310a169"
+    },
+    {
+      "destination": "skills/lean-verify/references/pep-certificate-formalization.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "0e84e009c628f76a2aa4b4a16db630da2236ffb93a5046aa89b088a2ba2ee03c",
+      "source": "Skills/lean-verify/references/pep-certificate-formalization.md",
+      "source_sha256": "0e84e009c628f76a2aa4b4a16db630da2236ffb93a5046aa89b088a2ba2ee03c"
+    },
+    {
+      "destination": "skills/lean-verify/references/source-to-lean-project-patterns.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4d722a12d80a6415ae085bee42ca5e2c860f541b35b14347af528fa7c3bed589",
+      "source": "Skills/lean-verify/references/source-to-lean-project-patterns.md",
+      "source_sha256": "4d722a12d80a6415ae085bee42ca5e2c860f541b35b14347af528fa7c3bed589"
+    },
+    {
+      "destination": "skills/lean-verify/scripts/check_lean_project.py",
+      "mode": "0755",
+      "overlays": [],
+      "packaged_sha256": "7162dba34b8920ffa64ee5d56c0c60cf8ff5db974366ecd94b97571c80f11e30",
+      "source": "Skills/lean-verify/scripts/check_lean_project.py",
+      "source_sha256": "7162dba34b8920ffa64ee5d56c0c60cf8ff5db974366ecd94b97571c80f11e30"
+    },
+    {
+      "destination": "skills/research-repo-manager/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4fc2674a37bc38addf264631366a21568a4966c82e99c661c5ae11ce1aeba419",
+      "source": "Skills/research-repo-manager/SKILL.md",
+      "source_sha256": "4fc2674a37bc38addf264631366a21568a4966c82e99c661c5ae11ce1aeba419"
+    },
+    {
+      "destination": "skills/research-repo-manager/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [
+        "portable-package-v3"
+      ],
+      "packaged_sha256": "fbad9209d9c93cdd4d39c1098a78c9483025ac605cc0adab179fff120e609b89",
+      "source": "Skills/research-repo-manager/agents/openai.yaml",
+      "source_sha256": "10595e3d51c7021d8b2c77bd1a7049fbb6b3e9e9dcc5d79007ba6179f675897f"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/AGENTS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "36053f115db99652429296326056a2c7fee798d8d9d4739dab68ba783b24f2d6",
+      "source": "Skills/research-repo-manager/assets/templates/AGENTS.md",
+      "source_sha256": "36053f115db99652429296326056a2c7fee798d8d9d4739dab68ba783b24f2d6"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/ARTIFACTS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "011ed0131105762f4bdb6897d2298e09e639b47414c2b93dcada827dc3dce47f",
+      "source": "Skills/research-repo-manager/assets/templates/ARTIFACTS.md",
+      "source_sha256": "011ed0131105762f4bdb6897d2298e09e639b47414c2b93dcada827dc3dce47f"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/EXPERIMENTS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "12698e459eec25c67e14b16f76293f9ad192be96249ede3de7089cc9d2fc3c54",
+      "source": "Skills/research-repo-manager/assets/templates/EXPERIMENTS.md",
+      "source_sha256": "12698e459eec25c67e14b16f76293f9ad192be96249ede3de7089cc9d2fc3c54"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/FINDINGS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "ceb0b874de27e91ab3b6a4fc897ec89f2cf647a969028de1706c4f26677b380a",
+      "source": "Skills/research-repo-manager/assets/templates/FINDINGS.md",
+      "source_sha256": "ceb0b874de27e91ab3b6a4fc897ec89f2cf647a969028de1706c4f26677b380a"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/GOALS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "a69f3014cad1271952295ea053212992041391ff23092ab027489ddced3c2b55",
+      "source": "Skills/research-repo-manager/assets/templates/GOALS.md",
+      "source_sha256": "a69f3014cad1271952295ea053212992041391ff23092ab027489ddced3c2b55"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/NEXTSTEP.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "24d27745c91bc4e3a6a581ad6447741d323735d0c83fdd8f4687586f318539e8",
+      "source": "Skills/research-repo-manager/assets/templates/NEXTSTEP.md",
+      "source_sha256": "24d27745c91bc4e3a6a581ad6447741d323735d0c83fdd8f4687586f318539e8"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/OPTIONAL_GOALS.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "a9fe9376c4aec6a0d8ad03a4508f163810c77daf2469169f8b9cb83fdea25240",
+      "source": "Skills/research-repo-manager/assets/templates/OPTIONAL_GOALS.md",
+      "source_sha256": "a9fe9376c4aec6a0d8ad03a4508f163810c77daf2469169f8b9cb83fdea25240"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/REPRODUCIBILITY.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "f4082c6921fe8877b03183a1ed45c05d38b177efcb9fc9a69f88a7fe05626de6",
+      "source": "Skills/research-repo-manager/assets/templates/REPRODUCIBILITY.md",
+      "source_sha256": "f4082c6921fe8877b03183a1ed45c05d38b177efcb9fc9a69f88a7fe05626de6"
+    },
+    {
+      "destination": "skills/research-repo-manager/assets/templates/SOURCES.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "ecbb23814641de625d7f4e1b4af713dfd51d54957940789762724bd96a200716",
+      "source": "Skills/research-repo-manager/assets/templates/SOURCES.md",
+      "source_sha256": "ecbb23814641de625d7f4e1b4af713dfd51d54957940789762724bd96a200716"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/compactification_collision.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4e385cc207d1b68c3aea8ed1096129c24ead82ca47ed2c6955fffabbe35db2de",
+      "source": "Skills/research-repo-manager/evals/compactification_collision.md",
+      "source_sha256": "4e385cc207d1b68c3aea8ed1096129c24ead82ca47ed2c6955fffabbe35db2de"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/compactification_requires_approval.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "1a6367e5e03869418470c72b771c401e50b99dca1d22f981cf2494ae5a10aa7c",
+      "source": "Skills/research-repo-manager/evals/compactification_requires_approval.md",
+      "source_sha256": "1a6367e5e03869418470c72b771c401e50b99dca1d22f981cf2494ae5a10aa7c"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/experiment_claim_missing_seed.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "e8d27e7eb6ca74cb6065baa9284fbf8742968f3e8054ba482ac3cdfb98b58290",
+      "source": "Skills/research-repo-manager/evals/experiment_claim_missing_seed.md",
+      "source_sha256": "e8d27e7eb6ca74cb6065baa9284fbf8742968f3e8054ba482ac3cdfb98b58290"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/init_existing_repo_no_overwrite.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "315e03c9a081067d1a4098d1485e48ebb475889bba4ff6f0def08cd1d332bbf2",
+      "source": "Skills/research-repo-manager/evals/init_existing_repo_no_overwrite.md",
+      "source_sha256": "315e03c9a081067d1a4098d1485e48ebb475889bba4ff6f0def08cd1d332bbf2"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/paper_figure_dependency_kept_active.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "534832ca34d79eb1f7c374dcbebd9af6d38258026f1c8cdb0eadbee9322f46b0",
+      "source": "Skills/research-repo-manager/evals/paper_figure_dependency_kept_active.md",
+      "source_sha256": "534832ca34d79eb1f7c374dcbebd9af6d38258026f1c8cdb0eadbee9322f46b0"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/rawsources_protected.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "39849d610a92a2710ec3ec1c079e10de77b056316af0fdcdb1f045af38e73512",
+      "source": "Skills/research-repo-manager/evals/rawsources_protected.md",
+      "source_sha256": "39849d610a92a2710ec3ec1c079e10de77b056316af0fdcdb1f045af38e73512"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/source_drift.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "eeaae3b43bcf2191d5654fceabe0062f6b10d31d830bec2acb051d7e4dadf02b",
+      "source": "Skills/research-repo-manager/evals/source_drift.md",
+      "source_sha256": "eeaae3b43bcf2191d5654fceabe0062f6b10d31d830bec2acb051d7e4dadf02b"
+    },
+    {
+      "destination": "skills/research-repo-manager/evals/status_refresh_no_edit.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "f1d154f94e0c55ec293f948e5fed2a35b6358f4e44d1ee4ffb43278d7bac4b31",
+      "source": "Skills/research-repo-manager/evals/status_refresh_no_edit.md",
+      "source_sha256": "f1d154f94e0c55ec293f948e5fed2a35b6358f4e44d1ee4ffb43278d7bac4b31"
+    },
+    {
+      "destination": "skills/research-repo-manager/references/claim-evidence-protocol.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "1a87ed1ead3519ff7590ccbd06181a5d596eceeeac45984e9e53281f4b3c4798",
+      "source": "Skills/research-repo-manager/references/claim-evidence-protocol.md",
+      "source_sha256": "1a87ed1ead3519ff7590ccbd06181a5d596eceeeac45984e9e53281f4b3c4798"
+    },
+    {
+      "destination": "skills/research-repo-manager/references/compactification-rubric.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "541538e2f70b0aa01ad18ca140938ec2555eac56b59c695127acad699a6d83b3",
+      "source": "Skills/research-repo-manager/references/compactification-rubric.md",
+      "source_sha256": "541538e2f70b0aa01ad18ca140938ec2555eac56b59c695127acad699a6d83b3"
+    },
+    {
+      "destination": "skills/research-repo-manager/references/reproducibility-protocol.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "e4bfc6aa6c98cae1c1473a634009c2d819b639de5ecdd15e23537eaa4f151a70",
+      "source": "Skills/research-repo-manager/references/reproducibility-protocol.md",
+      "source_sha256": "e4bfc6aa6c98cae1c1473a634009c2d819b639de5ecdd15e23537eaa4f151a70"
+    },
+    {
+      "destination": "skills/research-repo-manager/scripts/audit_sources.py",
+      "mode": "0755",
+      "overlays": [],
+      "packaged_sha256": "9a00f560c965e626b280e67c4069e13da40779550e7863bd93e68a08b29563ce",
+      "source": "Skills/research-repo-manager/scripts/audit_sources.py",
+      "source_sha256": "9a00f560c965e626b280e67c4069e13da40779550e7863bd93e68a08b29563ce"
+    },
+    {
+      "destination": "skills/research-repo-manager/scripts/init_research_repo.py",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "399480d8fc1fdcb558084b0a3ad0ae837feb61b5d673c5cc9747910c07e9d584",
+      "source": "Skills/research-repo-manager/scripts/init_research_repo.py",
+      "source_sha256": "399480d8fc1fdcb558084b0a3ad0ae837feb61b5d673c5cc9747910c07e9d584"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/SKILL.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "383a7343911260b1b54e82714f7d82b54472363068a05c8c58bcad6d82f7c671",
+      "source": "Skills/solve-with-highest-reasoning/SKILL.md",
+      "source_sha256": "383a7343911260b1b54e82714f7d82b54472363068a05c8c58bcad6d82f7c671"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/agents/openai.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "3c9f29a0dfe901da387a1cb72e28b1fecdd9c63d96a64e90f0ecceadff049c2f",
+      "source": "Skills/solve-with-highest-reasoning/agents/openai.yaml",
+      "source_sha256": "3c9f29a0dfe901da387a1cb72e28b1fecdd9c63d96a64e90f0ecceadff049c2f"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/approach-registry.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "5621f1921009a6734c1505dbb9f9254df425898544b0c4387a6c764618126883",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/approach-registry.md",
+      "source_sha256": "5621f1921009a6734c1505dbb9f9254df425898544b0c4387a6c764618126883"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/audit-log.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "109116f1a447a6c3ac07a38cb1ff386bf1d25d591e241db8b4bcc7fb1a3c6982",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/audit-log.md",
+      "source_sha256": "109116f1a447a6c3ac07a38cb1ff386bf1d25d591e241db8b4bcc7fb1a3c6982"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/campaign.yaml",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "c29acbfed2dc2fb6775cd13d2a650c5dab89274a152bd1f74fb37d8ee773c0d8",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/campaign.yaml",
+      "source_sha256": "c29acbfed2dc2fb6775cd13d2a650c5dab89274a152bd1f74fb37d8ee773c0d8"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/claim-ledger.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "b8908dd433559b762229821aadc55ca22bbef0535ad65272123a3bb533892b5a",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/claim-ledger.md",
+      "source_sha256": "b8908dd433559b762229821aadc55ca22bbef0535ad65272123a3bb533892b5a"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/final-report.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "6c96864a13cc67db24863ba6e43f81858703d309b3589b460ab66bb4379a9d5c",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/final-report.md",
+      "source_sha256": "6c96864a13cc67db24863ba6e43f81858703d309b3589b460ab66bb4379a9d5c"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/problem-contract.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "0df974c1d4909108967c92d90023aa5df424cd0cb05d04b20c52c05cc67670b4",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/problem-contract.md",
+      "source_sha256": "0df974c1d4909108967c92d90023aa5df424cd0cb05d04b20c52c05cc67670b4"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/reproducibility.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "d35f06b91eae10e1d3fcdeb5c12b8f1d294b5df1ca784bed2a2c3d96884cf6a4",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/reproducibility.md",
+      "source_sha256": "d35f06b91eae10e1d3fcdeb5c12b8f1d294b5df1ca784bed2a2c3d96884cf6a4"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/assets/run-template/source-manifest.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "b84306b558f32c68b45a05382e9f7f79de869b29ee297d9dc1fcf1b3792b3d13",
+      "source": "Skills/solve-with-highest-reasoning/assets/run-template/source-manifest.md",
+      "source_sha256": "b84306b558f32c68b45a05382e9f7f79de869b29ee297d9dc1fcf1b3792b3d13"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/references/problem-contract.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "eb3ff19aaa86003baf67b24a83ea8367ca20b1d88e57144aa92f28c890d54b37",
+      "source": "Skills/solve-with-highest-reasoning/references/problem-contract.md",
+      "source_sha256": "eb3ff19aaa86003baf67b24a83ea8367ca20b1d88e57144aa92f28c890d54b37"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/references/run-record-schema.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "7dd5c1d6e0a8dd0615c03192d4a1a9a0df7108f56cf41ad3ae6bc61aa5171eea",
+      "source": "Skills/solve-with-highest-reasoning/references/run-record-schema.md",
+      "source_sha256": "7dd5c1d6e0a8dd0615c03192d4a1a9a0df7108f56cf41ad3ae6bc61aa5171eea"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/references/verification-profiles.md",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "8faf8763c8c244d6de580a17395968cc0e9ce20000ec2c3700b126f3ebfcfe2d",
+      "source": "Skills/solve-with-highest-reasoning/references/verification-profiles.md",
+      "source_sha256": "8faf8763c8c244d6de580a17395968cc0e9ce20000ec2c3700b126f3ebfcfe2d"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/scripts/init_campaign.py",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "4cad3792ef8d1a273826ea75dcdad8e4ba7c53d88c873d29a2d360c957a105bb",
+      "source": "Skills/solve-with-highest-reasoning/scripts/init_campaign.py",
+      "source_sha256": "4cad3792ef8d1a273826ea75dcdad8e4ba7c53d88c873d29a2d360c957a105bb"
+    },
+    {
+      "destination": "skills/solve-with-highest-reasoning/scripts/validate_campaign.py",
+      "mode": "0644",
+      "overlays": [],
+      "packaged_sha256": "bc1a306ec478a7412e3510a27bc0940022275b63d32c8cf92680bcc0a52b99f9",
+      "source": "Skills/solve-with-highest-reasoning/scripts/validate_campaign.py",
+      "source_sha256": "bc1a306ec478a7412e3510a27bc0940022275b63d32c8cf92680bcc0a52b99f9"
+    }
+  ],
+  "plugin": "autoopt",
+  "schema_version": 2,
+  "skills": [
+    "auto-opt",
+    "bnb-pep-skill",
+    "chatgpt-pro-handoff",
+    "chatgpt-pro-session",
+    "frontier-llm-consult",
+    "lean-verify",
+    "research-repo-manager",
+    "solve-with-highest-reasoning"
+  ],
+  "source": {
+    "release_input_revision": "ee6b54861dc17c8805d3424d0005fdc0828c9976",
+    "release_input_revision_known": true,
+    "release_input_surface": {
+      "excluded_generated_outputs": [
+        "AutoOPT-plugin/plugins/autoopt/skills/**",
+        "AutoOPT-plugin/plugins/autoopt/assets/autoopt-pipeline.png",
+        "AutoOPT-plugin/plugins/autoopt/SOURCE-MANIFEST.json"
+      ],
+      "included": [
+        "Skills",
+        "AutoOPT-plugin"
+      ]
+    },
+    "release_inputs": [
+      {
+        "excluded_generated_outputs": [],
+        "path": "Skills",
+        "status": "clean",
+        "tracked": true
+      },
+      {
+        "excluded_generated_outputs": [
+          "AutoOPT-plugin/plugins/autoopt/skills/**",
+          "AutoOPT-plugin/plugins/autoopt/assets/autoopt-pipeline.png",
+          "AutoOPT-plugin/plugins/autoopt/SOURCE-MANIFEST.json"
+        ],
+        "path": "AutoOPT-plugin",
+        "status": "clean",
+        "tracked": true
+      }
+    ],
+    "release_inputs_clean": true,
+    "release_inputs_tracked": true
+  }
+}

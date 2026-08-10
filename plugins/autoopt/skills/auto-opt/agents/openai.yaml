@@ -1,0 +1,4 @@
+interface:
+  display_name: "AutoOPT Orchestrator"
+  short_description: "Human-gated AutoOPT pipeline controller"
+  default_prompt: "Use $auto-opt to start a human-gated AutoOPT pipeline session in this research repository, beginning with Stage 0 repository grounding and pausing at every stage gate for my approval."
