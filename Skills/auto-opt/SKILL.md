@@ -53,11 +53,14 @@ exceptionally difficult, sharply defined target when repository exploration or
 local tools materially help, the user explicitly invokes
 `$solve-with-highest-reasoning`, and the user accepts its Goal mode, equivalent
 persistent mechanism, or disclosed checkpointed fallback when neither is
-available, plus its eight-wall-clock-hour, 28,800-active-work-second, and
-180-minute per-code-or-solver-execution contracts. Exclude the native route
-when provider diversity or an independent second-model review is required. In
-an AutoOPT run, the native skill's standalone explicit-invocation authorization
-is necessary but does not replace this orchestrator's Stage 2 route gate.
+available, plus its user-confirmed minimum-duration and 180-minute
+per-code-or-solver-execution contracts. The duration defaults to eight elapsed
+wall-clock hours and 28,800 logged active-work seconds; a custom `h` hours
+requires both `h` elapsed wall-clock hours and `h * 3600` logged active-work
+seconds. Exclude the native route when provider diversity or an independent
+second-model review is required. In an AutoOPT run, the native skill's
+standalone explicit-invocation authorization is necessary but does not replace
+this orchestrator's Stage 2 route gate.
 
 Requests for another provider, API or multi-provider routing, or provider
 diversity are unsupported by Stage 2. Stop rather than substituting a route.
@@ -131,21 +134,26 @@ contracts, branch-specific gate templates, and evidence-archiving rules.
      invocation of its leaf skill would otherwise provide standing upload
      consent.
    - For `solve-with-highest-reasoning`, create no upload package. Require the
-     user's explicit skill invocation and approval of the exact target,
-     admissible output, repository root, Stage 1 seeds, repository discovery
-     and source boundaries, immutable and excluded paths, local-write scope,
-     relevant local tools, resolved strongest Codex model and highest supported
-     reasoning setting with no downgrade, persistence mode, duration
-     requirements, 180-minute code-or-solver-execution ceiling, restricted
-     public-search policy, and both archive destinations. Repository-local
-     exploration may identify and use additional relevant files within that
-     approved scope without another gate. A different target or repository
-     root, a widened source boundary, or any external transfer requires renewed
-     approval.
+     user's explicit skill invocation. Before Goal setup, repository grounding,
+     campaign initialization, or clock start, let the native skill resolve and
+     freeze the user-confirmed duration. A valid duration in the invocation is
+     acknowledged without another question; when no duration is supplied, the
+     skill presents its eight-hour and 28,800-second default and waits for the
+     user to select it or provide `h` hours. Require approval of the exact
+     target, admissible output, repository root, Stage 1 seeds, repository
+     discovery and source boundaries, immutable and excluded paths, local-write
+     scope, relevant local tools, resolved strongest Codex model and highest
+     supported reasoning setting with no downgrade, the confirmed duration
+     source and floors, persistence mode, 180-minute code-or-solver-execution
+     ceiling, restricted public-search policy, and both archive destinations.
+     Repository-local exploration may identify and use additional relevant
+     files within that approved scope without another gate. A different target
+     or repository root, a widened source boundary, or any external transfer
+     requires renewed approval. Preserve and do not weaken the frozen duration.
    - Execute only the approved route through `frontier-llm-consult`. For the
      native route, load and follow `solve-with-highest-reasoning` without
-     weakening its persistence, capability, audit, source, computation, or
-     stopping rules. Do not let the native campaign invoke
+     weakening its frozen duration, persistence, capability, audit, source,
+     computation, or stopping rules. Do not let the native campaign invoke
      `frontier-llm-consult`, ChatGPT, or another external model unless
      the user separately approves that workflow under its own transfer gate.
    - Archive durable external-route evidence under `stage2/`: ChatGPT Pro
@@ -209,10 +217,11 @@ the applicable branch-specific fields. An external-route brief names the
 provider/model or session mode, exact outgoing file list or context manifest,
 preview evidence, secrets check, and archive destination. A native-route brief
 names the exact target and admissible output, explicit invocation, persistence
-mode, resolved model and reasoning setting, duration and code/solver execution
-ceilings, repository roots and discovery scope, seed artifacts, immutable/excluded
-paths, local-write scope, authorized tools, source and public-search boundary,
-the absence of external-model transfer, and both archive destinations. For
+mode, resolved model and reasoning setting, duration confirmation, minimum
+wall-clock and active-work floors, the code/solver execution ceiling,
+repository roots and discovery scope, seed artifacts, immutable/excluded paths,
+local-write scope, authorized tools, source and public-search boundary, the
+absence of external-model transfer, and both archive destinations. For
 Stage 3, the brief must additionally name the theorem
 targets, Lean/Lake commands, hygiene output, permitted axioms, any
 `Challenge.lean`/`Solution.lean`/`config.json` wrapper paths, comparator
@@ -258,9 +267,9 @@ for a later boundary.
   approve-before-send gate, and never attach secrets.
 - Never route Stage 2 to another provider, API or multi-provider backend, or a
   provider-diversity panel.
-- Never invoke `solve-with-highest-reasoning` implicitly, weaken its eight-hour
-  campaign contract, silently downgrade its model or reasoning setting, or
-  replace an unavailable selected route with another route.
+- Never invoke `solve-with-highest-reasoning` implicitly, weaken its selected
+  and frozen duration contract, silently downgrade its model or reasoning
+  setting, or replace an unavailable selected route with another route.
 - Never let the native route transfer repository context to an external model
   without a separate `frontier-llm-consult` approval workflow.
 - Never skip durable Stage 2 archiving. Record the route choice and either the

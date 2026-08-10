@@ -99,5 +99,8 @@ scopes: `dependency_quantifier_edge_case` and
 For an incomplete campaign, preserve the strongest verified claims and name
 the smallest unresolved dependency. State that the campaign did not establish
 a complete resolution; do not answer merely that the problem is open. Do not
-voluntarily close before eight hours, and continue afterward while a round
-materially advances, refutes, or decisively tests an important dependency.
+voluntarily close before both the frozen wall-clock and active-work floors in
+`campaign.yaml`. If a candidate appears early, continue independent
+reconstruction and adversarial auditing. After both floors hold, continue while
+a round materially advances, refutes, or decisively tests an important
+dependency.

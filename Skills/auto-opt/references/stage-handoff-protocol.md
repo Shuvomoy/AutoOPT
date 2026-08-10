@@ -82,9 +82,15 @@ without this file; this file standardizes the artifacts and the brief format.
   invocation and preserve its active Goal mode, equivalent persistent
   mechanism, or disclosed checkpointed fallback when neither is available;
   strongest-model and highest-reasoning resolution with no downgrade;
-  eight-hour wall-clock and 28,800-active-work-second floors; 180-minute
-  code-or-solver-execution ceiling; local-tool rules; audit requirements; and
-  stopping rules.
+  user-confirmed minimum-duration floor; 180-minute code-or-solver-execution
+  ceiling; local-tool rules; audit requirements; and stopping rules. Before
+  Goal setup, repository grounding, campaign initialization, or clock start,
+  let the native skill resolve and freeze the duration. A valid `h`-hour value
+  in the invocation is acknowledged without a redundant question. If no
+  duration is supplied, present the default of eight elapsed wall-clock hours
+  and 28,800 logged active-work seconds and wait for the user to accept it or
+  supply `h`, which sets floors of `h` elapsed wall-clock hours and `h * 3600`
+  logged active-work seconds. Preserve and do not weaken that frozen floor.
   Never silently fall back to another route. If ChatGPT Pro is selected but
   unavailable, block without automatically switching to native. If native is
   selected but its invocation, persistence, capability resolution, or required
@@ -187,7 +193,8 @@ Exact target and admissible output: <frozen Stage 2 target and accepted resoluti
 Explicit invocation: <$solve-with-highest-reasoning invocation evidence>
 Persistence mode: <active Goal mode | equivalent persistent mechanism | disclosed checkpointed manual fallback when no native or equivalent mechanism exists>
 Capability selection: <strongest Codex model, highest supported reasoning setting, and resolution evidence>
-Duration contract: <eight wall-clock hours and 28,800 active-work seconds>
+Duration confirmation: <explicit invocation value acknowledged | user selected default | user supplied override>
+Duration contract: <h elapsed wall-clock hours and h * 3600 logged active-work seconds; default h = 8 and 28,800 seconds>
 Code/solver execution ceiling: <180 minutes per execution>
 Repository and seed artifacts: <repository root and exact Stage 1 seed paths>
 Discovery and source boundary: <approved repository scope and restricted public-search policy>
@@ -250,9 +257,9 @@ Evidence label requested: <Lean build+hygiene verified | Lean+comparator verifie
   outcomes when a complete candidate is claimed. Campaign-record validation
   checks protocol structure only and is not mathematical verification.
 - In `candidate.md`, prefix each model-produced object with `candidate` and give
-  it exactly one claim status. Eight hours elapsed, subagent agreement, model
-  self-review, and a passing campaign-record validator do not upgrade the
-  mathematical status.
+  it exactly one claim status. Satisfaction of the selected duration floor,
+  subagent agreement, model self-review, and a passing campaign-record
+  validator do not upgrade the mathematical status.
 - Do not allow the native campaign to invoke Frontier, ChatGPT, or another
   external-model route recursively. Any such transfer is a distinct
   consultation requiring a separate recommendation and approve-before-send

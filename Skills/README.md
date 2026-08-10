@@ -65,9 +65,15 @@ skills.
   and creates no external consultation upload package. It requires the
   strongest available Codex GPT at its highest supported reasoning setting,
   Goal-mode persistence, an equivalent persistent mechanism, or the skill's
-  disclosed checkpointed fallback when neither is available, at least eight
-  wall-clock hours and 28,800 logged active-work seconds, and a 180-minute
-  code-or-solver-execution ceiling. Its authoritative record lives under
+  disclosed checkpointed fallback when neither is available, a user-confirmed
+  minimum duration, and a 180-minute code-or-solver-execution ceiling. The
+  duration defaults to eight elapsed wall-clock hours and 28,800 logged
+  active-work seconds; a custom `h` hours requires both `h` elapsed wall-clock
+  hours and `h * 3600` logged active-work seconds. The skill resolves and
+  freezes this duration before campaign setup, acknowledges a valid duration
+  supplied in the invocation without asking again, and otherwise waits for the
+  user to accept the default or provide a custom duration. Its authoritative
+  record lives under
   `ResearchLog/highest-reasoning-runs/`. This route is not an independent
   second-model review. Public search is restricted to ordinary background and
   standard named theorems, never the exact target; any external-model route
@@ -166,8 +172,9 @@ These skills enforce a uniform standard:
   external consultation route and one native Codex route. It recommends
   `chatgpt-pro-session` for ordinary or ambiguous work, including bounded
   single-turn reviews, and `solve-with-highest-reasoning` only after explicit
-  invocation for a target that warrants its complete eight-hour campaign
-  contract. ChatGPT Pro can supply an external second-model review. Provider
+  invocation for a target that warrants its complete user-confirmed duration
+  contract. AutoOPT and its router preserve the selected floor and never
+  weaken it. ChatGPT Pro can supply an external second-model review. Provider
   diversity or another provider is unsupported, and the native route never
   substitutes for that requirement.
 - The native route reads approved repository context directly and may discover
@@ -188,7 +195,7 @@ These skills enforce a uniform standard:
 
 ## Licensing
 
-A license for the eight author-written skills (`auto-opt`, `bnb-pep-skill`,
+The eight author-written skills (`auto-opt`, `bnb-pep-skill`,
 `chatgpt-pro-handoff`, `chatgpt-pro-session`, `frontier-llm-consult`,
 `research-repo-manager`, `lean-verify`, and
-`solve-with-highest-reasoning`) will be chosen before public release.
+`solve-with-highest-reasoning`) are licensed under the Apache License 2.0.

@@ -12,7 +12,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 
-MINIMUM_HOURS = 8
+DEFAULT_MINIMUM_HOURS = "8"
+DEFAULT_MINIMUM_ACTIVE_SECONDS = 8 * 60 * 60
 RUNS_RELATIVE_PATH = Path("ResearchLog") / "highest-reasoning-runs"
 CORE_RESEARCH_FILES = ("GOALS.md", "SOURCES.md", "FINDINGS.md", "NEXTSTEP.md")
 REQUIRED_TEMPLATE_FILES = {
@@ -55,6 +56,14 @@ def parse_args() -> argparse.Namespace:
             "research-repo-manager governance."
         ),
     )
+    parser.add_argument(
+        "--minimum-hours",
+        help=(
+            "Positive base-10 decimal campaign floor in hours. The value must "
+            "represent a whole number of seconds; omission uses the explicitly "
+            "selected eight-hour default."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -64,6 +73,45 @@ def normalize_slug(value: str) -> str:
     if not slug:
         raise CampaignInitError("The slug must contain at least one letter or digit.")
     return slug[:64].rstrip("-")
+
+
+def parse_minimum_hours(value: str | None) -> tuple[str, int, str]:
+    """Return canonical hours, exact seconds, and the duration source."""
+    if value is None:
+        return (
+            DEFAULT_MINIMUM_HOURS,
+            DEFAULT_MINIMUM_ACTIVE_SECONDS,
+            "default",
+        )
+    match = re.fullmatch(r"([0-9]+)(?:\.([0-9]+))?", value)
+    if match is None:
+        raise CampaignInitError(
+            "--minimum-hours must be a positive base-10 decimal without a "
+            "sign, exponent, unit suffix, range, or approximation marker"
+        )
+    whole, fraction = match.group(1), match.group(2) or ""
+    try:
+        numerator = int(whole + fraction)
+    except ValueError as exc:
+        raise CampaignInitError("--minimum-hours has too many digits") from exc
+    if numerator <= 0:
+        raise CampaignInitError("--minimum-hours must be greater than zero")
+    denominator = 10 ** len(fraction)
+    seconds_numerator = numerator * 60 * 60
+    minimum_active_seconds, remainder = divmod(seconds_numerator, denominator)
+    if remainder:
+        raise CampaignInitError(
+            "--minimum-hours must represent a whole number of seconds; "
+            f"{value!r} does not"
+        )
+    canonical_whole = whole.lstrip("0") or "0"
+    canonical_fraction = fraction.rstrip("0")
+    canonical_hours = (
+        f"{canonical_whole}.{canonical_fraction}"
+        if canonical_fraction
+        else canonical_whole
+    )
+    return canonical_hours, minimum_active_seconds, "user_override"
 
 
 def ensure_safe_root(root: Path) -> Path:
@@ -196,7 +244,11 @@ def initialize(
     root: Path,
     slug_input: str,
     managed_agents: Path | None = None,
+    minimum_hours_input: str | None = None,
 ) -> dict[str, object]:
+    minimum_hours, minimum_active_seconds, duration_source = parse_minimum_hours(
+        minimum_hours_input
+    )
     root = ensure_safe_root(root)
     slug = normalize_slug(slug_input)
     template_root = Path(__file__).resolve().parent.parent / "assets" / "run-template"
@@ -213,7 +265,13 @@ def initialize(
     managed, detection_basis = detect_managed_repository(root, managed_agents)
 
     now = datetime.now().astimezone().replace(microsecond=0)
-    earliest = now + timedelta(hours=MINIMUM_HOURS)
+    try:
+        duration = timedelta(seconds=minimum_active_seconds)
+        earliest = now + duration
+    except OverflowError as exc:
+        raise CampaignInitError(
+            "--minimum-hours is too large to represent its finalization timestamp"
+        ) from exc
     timestamp = now.strftime("%Y%m%dT%H%M%S%z")
     base_name = f"{timestamp}-{slug}"
     runs_root = root / RUNS_RELATIVE_PATH
@@ -247,6 +305,9 @@ def initialize(
         "{{RUN_DIRECTORY_JSON}}": json.dumps(str(run_directory), ensure_ascii=False),
         "{{STARTED_AT}}": now.isoformat(),
         "{{EARLIEST_FINALIZATION_AT}}": earliest.isoformat(),
+        "{{DURATION_SOURCE_JSON}}": json.dumps(duration_source),
+        "{{MINIMUM_HOURS_JSON}}": json.dumps(minimum_hours),
+        "{{MINIMUM_ACTIVE_SECONDS}}": str(minimum_active_seconds),
         "{{MANAGED_DETECTED}}": "true" if managed else "false",
         "{{MANAGED_DETECTION_BASIS_JSON}}": json.dumps(
             detection_basis, ensure_ascii=False
@@ -266,6 +327,11 @@ def initialize(
                     "",
                     f"- Run ID: `{run_id}`",
                     f"- Initialized at: `{now.isoformat()}`",
+                    f"- Duration source: `{duration_source}`",
+                    f"- Minimum wall-clock duration: `{minimum_hours}` hours",
+                    "- Minimum logged active research: "
+                    f"`{minimum_active_seconds}` seconds",
+                    f"- Earliest voluntary finalization: `{earliest.isoformat()}`",
                     "- State: Campaign record created; capability and problem contract "
                     "must be populated before research begins.",
                     "",
@@ -304,7 +370,9 @@ def initialize(
         "repository_root": str(root),
         "started_at": now.isoformat(),
         "earliest_finalization_at": earliest.isoformat(),
-        "minimum_hours": MINIMUM_HOURS,
+        "duration_source": duration_source,
+        "minimum_hours": minimum_hours,
+        "minimum_active_seconds": minimum_active_seconds,
         "managed_repository": managed,
         "managed_detection_basis": detection_basis,
     }
@@ -313,7 +381,12 @@ def initialize(
 def main() -> int:
     args = parse_args()
     try:
-        result = initialize(args.root, args.slug, args.managed_agents)
+        result = initialize(
+            args.root,
+            args.slug,
+            args.managed_agents,
+            args.minimum_hours,
+        )
     except (CampaignInitError, OSError, RuntimeError, UnicodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

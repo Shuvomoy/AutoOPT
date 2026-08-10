@@ -21,6 +21,8 @@ Record all of the following:
 - `partial_progress`: state what is useful but insufficient.
 - `out_of_scope`: record exclusions and prohibited side effects.
 - `source_policy`: record local-source and public-search boundaries.
+- `campaign_duration`: copy the confirmed duration source, canonical minimum
+  hours, and exact minimum active-work seconds from `campaign.yaml`.
 - `requested_output`: preserve required form, notation, and artifacts.
 - `ambiguities`: identify unresolved choices that could change the result.
 - `contract_version`: record revisions and the reason for each revision.
@@ -88,9 +90,14 @@ Require the applicable certificate profile, the full completion-obligation
 list, and two fresh independent audits before marking the target complete.
 Never use agent agreement as proof.
 
-Do not voluntarily finalize before both the eight-hour wall-clock floor and
-28,800 checkpointed active-work seconds. Continue afterward while rounds
-materially advance, refute, or test an important dependency. For an incomplete
-closeout, record the same obstruction across three consecutive post-minimum
-rounds, the absence of a defensible allowed next step, exact blockers, and
-satisfied stopping conditions rather than weakening this contract.
+Do not voluntarily finalize before both campaign-specific floors recorded in
+`campaign.yaml`: `earliest_finalization_at` and
+`timing.minimum_active_seconds` of checkpointed active work. The confirmed
+duration is a minimum, not a timeout, and cannot be weakened after campaign
+initialization. If a candidate appears early, continue independent
+reconstruction and adversarial auditing through both floors. Continue
+afterward while rounds materially advance, refute, or test an important
+dependency. For an incomplete closeout, record the same obstruction across
+three consecutive rounds that each start after both duration floors hold, the
+absence of a defensible allowed next step, exact blockers, and satisfied
+stopping conditions rather than weakening this contract.

@@ -13,8 +13,8 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 
-MINIMUM_HOURS = 8
-MINIMUM_ACTIVE_SECONDS = 8 * 60 * 60
+LEGACY_MINIMUM_HOURS = 8
+LEGACY_MINIMUM_ACTIVE_SECONDS = 8 * 60 * 60
 NONTERMINAL_STATUSES = {"prepared", "running", "paused"}
 TERMINAL_STATUSES = {
     "complete",
@@ -107,6 +107,165 @@ def parse_args() -> argparse.Namespace:
         help="Allow a nonterminal prepared/running/paused checkpoint.",
     )
     return parser.parse_args()
+
+
+def canonical_duration_hours(value: str) -> tuple[str, int] | None:
+    """Return canonical decimal hours and exact seconds when representable."""
+    match = re.fullmatch(r"([0-9]+)(?:\.([0-9]+))?", value)
+    if match is None:
+        return None
+    whole, fraction = match.group(1), match.group(2) or ""
+    try:
+        numerator = int(whole + fraction)
+    except ValueError:
+        return None
+    if numerator <= 0:
+        return None
+    seconds_numerator = numerator * 60 * 60
+    seconds, remainder = divmod(seconds_numerator, 10 ** len(fraction))
+    if remainder:
+        return None
+    canonical_whole = whole.lstrip("0") or "0"
+    canonical_fraction = fraction.rstrip("0")
+    canonical = (
+        f"{canonical_whole}.{canonical_fraction}"
+        if canonical_fraction
+        else canonical_whole
+    )
+    return canonical, seconds
+
+
+def validate_duration_contract(
+    data: dict[str, Any],
+    schema_version: int | None,
+    errors: list[str],
+) -> tuple[str | None, int | None]:
+    """Validate and resolve the versioned campaign-duration contract."""
+    minimum_hours = nested(data, "timing.minimum_hours", errors)
+    if schema_version == 1:
+        if minimum_hours != LEGACY_MINIMUM_HOURS:
+            errors.append(
+                f"schema-version-1 timing.minimum_hours must equal "
+                f"{LEGACY_MINIMUM_HOURS}"
+            )
+        return str(LEGACY_MINIMUM_HOURS), LEGACY_MINIMUM_ACTIVE_SECONDS
+    if schema_version != 2:
+        return None, None
+
+    duration_source = nested(data, "timing.duration_source", errors)
+    declared_seconds = nested(data, "timing.minimum_active_seconds", errors)
+    if duration_source not in {"default", "user_override"}:
+        errors.append(
+            "timing.duration_source must be 'default' or 'user_override'"
+        )
+    if not isinstance(minimum_hours, str):
+        errors.append(
+            "schema-version-2 timing.minimum_hours must be a quoted canonical "
+            "decimal string"
+        )
+        return None, None
+    resolved = canonical_duration_hours(minimum_hours)
+    if resolved is None:
+        errors.append(
+            "timing.minimum_hours must be a positive canonical base-10 decimal "
+            "representing a whole number of seconds"
+        )
+        return None, None
+    canonical_hours, computed_seconds = resolved
+    if minimum_hours != canonical_hours:
+        errors.append(
+            "timing.minimum_hours must use canonical decimal form; expected "
+            f"{canonical_hours!r}"
+        )
+    if duration_source == "default" and (
+        canonical_hours != "8" or computed_seconds != LEGACY_MINIMUM_ACTIVE_SECONDS
+    ):
+        errors.append(
+            "timing.duration_source 'default' requires minimum_hours '8' and "
+            "minimum_active_seconds 28800"
+        )
+    if (
+        not isinstance(declared_seconds, int)
+        or isinstance(declared_seconds, bool)
+        or declared_seconds <= 0
+    ):
+        errors.append("timing.minimum_active_seconds must be a positive integer")
+    elif declared_seconds != computed_seconds:
+        errors.append(
+            f"timing.minimum_hours {canonical_hours!r} requires "
+            f"timing.minimum_active_seconds={computed_seconds}, not "
+            f"{declared_seconds}"
+        )
+    return canonical_hours, computed_seconds
+
+
+def validate_initial_duration_checkpoint(
+    data: dict[str, Any],
+    run_dir: Path,
+    schema_version: int | None,
+    errors: list[str],
+) -> None:
+    """Cross-check the schema-v2 duration against its initialization checkpoint."""
+    if schema_version != 2:
+        return
+    checkpoint = run_dir / "checkpoints" / "0000-prepared.md"
+    if not checkpoint.is_file():
+        errors.append(
+            "schema-version-2 campaign requires checkpoints/0000-prepared.md"
+        )
+        return
+    try:
+        checkpoint.resolve(strict=True).relative_to(run_dir)
+        text = checkpoint.read_text(encoding="utf-8")
+    except (OSError, RuntimeError, UnicodeError, ValueError) as exc:
+        errors.append(f"initial duration checkpoint is unreadable or unsafe: {exc}")
+        return
+
+    fields = {
+        "run_id": r"^- Run ID: `([^`\n]+)`$",
+        "started_at": r"^- Initialized at: `([^`\n]+)`$",
+        "duration_source": r"^- Duration source: `([^`\n]+)`$",
+        "minimum_hours": (
+            r"^- Minimum wall-clock duration: `([^`\n]+)` hours$"
+        ),
+        "minimum_active_seconds": (
+            r"^- Minimum logged active research: `([^`\n]+)` seconds$"
+        ),
+        "earliest_finalization_at": (
+            r"^- Earliest voluntary finalization: `([^`\n]+)`$"
+        ),
+    }
+    captured: dict[str, str] = {}
+    for field, pattern in fields.items():
+        matches = re.findall(pattern, text, flags=re.MULTILINE)
+        if len(matches) != 1:
+            errors.append(
+                "initial duration checkpoint must contain exactly one "
+                f"{field} record"
+            )
+            continue
+        captured[field] = matches[0]
+
+    expected = {
+        "run_id": nested(data, "run_id", errors),
+        "started_at": nested(data, "started_at", errors),
+        "duration_source": nested(data, "timing.duration_source", errors),
+        "minimum_hours": nested(data, "timing.minimum_hours", errors),
+        "minimum_active_seconds": nested(
+            data, "timing.minimum_active_seconds", errors
+        ),
+        "earliest_finalization_at": nested(
+            data, "earliest_finalization_at", errors
+        ),
+    }
+    for field, expected_value in expected.items():
+        if field not in captured:
+            continue
+        if captured[field] != str(expected_value):
+            errors.append(
+                f"campaign duration field {field} differs from the frozen "
+                "initial checkpoint"
+            )
 
 
 def parse_scalar(text: str, line_number: int) -> Any:
@@ -312,13 +471,18 @@ def validate_required_tree(run_dir: Path, errors: list[str]) -> None:
 
 def validate_identity(
     data: dict[str, Any], run_dir: Path, errors: list[str]
-) -> tuple[Path | None, str | None]:
+) -> tuple[Path | None, str | None, int | None]:
     schema_version = nested(data, "schema_version", errors)
     run_id = nested(data, "run_id", errors)
     repository_root_value = nested(data, "repository_root", errors)
     run_directory_value = nested(data, "run_directory", errors)
-    if schema_version != 1:
-        errors.append("schema_version must equal 1")
+    if (
+        not isinstance(schema_version, int)
+        or isinstance(schema_version, bool)
+        or schema_version not in {1, 2}
+    ):
+        errors.append("schema_version must equal 1 or 2")
+        schema_version = None
     expected_run_id = "hr-" + run_dir.name
     if not isinstance(run_id, str) or run_id != expected_run_id:
         errors.append(
@@ -347,7 +511,7 @@ def validate_identity(
             )
         if "RawSources" in run_dir.parts:
             errors.append("run directory must not be inside RawSources")
-    return repository_root, run_id
+    return repository_root, run_id, schema_version
 
 
 def validate_capability(
@@ -590,8 +754,14 @@ def validate_work_intervals(
     run_dir: Path,
     run_id: str | None,
     data: dict[str, Any],
+    minimum_active_seconds: int | None,
     errors: list[str],
-) -> tuple[int, int, list[tuple[datetime, datetime, int]]]:
+) -> tuple[
+    int,
+    int,
+    list[tuple[datetime, datetime, int]],
+    datetime | None,
+]:
     seen_ids: set[str] = set()
     parsed: list[tuple[datetime, datetime, int, str, int]] = []
     for line_number, record in records:
@@ -691,7 +861,18 @@ def validate_work_intervals(
             f"timing.paused_seconds={declared_paused!r} but intervals sum to {paused}"
         )
     interval_bounds = [(started, ended, line) for started, ended, _, _, line in parsed]
-    return active, paused, interval_bounds
+    active_floor_reached_at: datetime | None = None
+    if minimum_active_seconds is not None:
+        cumulative_active = 0
+        for started, _, duration, kind, _ in parsed:
+            if kind not in COUNTABLE_WORK_KINDS:
+                continue
+            remaining = minimum_active_seconds - cumulative_active
+            if duration >= remaining:
+                active_floor_reached_at = started + timedelta(seconds=remaining)
+                break
+            cumulative_active += duration
+    return active, paused, interval_bounds, active_floor_reached_at
 
 
 def validate_rounds(
@@ -700,6 +881,7 @@ def validate_rounds(
     run_id: str | None,
     data: dict[str, Any],
     status: str | None,
+    active_floor_reached_at: datetime | None,
     errors: list[str],
 ) -> list[tuple[datetime, datetime, int]]:
     seen_ids: set[str] = set()
@@ -808,13 +990,19 @@ def validate_rounds(
         "earliest_finalization_at",
         errors,
     )
+    both_floors_reached_at = (
+        max(earliest, active_floor_reached_at)
+        if earliest is not None and active_floor_reached_at is not None
+        else None
+    )
     after_minimum = (
         [
             record
             for record in parsed
-            if earliest is not None and record["_started_at"] >= earliest
+            if both_floors_reached_at is not None
+            and record["_started_at"] >= both_floors_reached_at
         ]
-        if earliest is not None
+        if both_floors_reached_at is not None
         else []
     )
     productive_count = sum(
@@ -1620,6 +1808,8 @@ def validate_timing_and_status(
     run_id: str | None,
     status: str | None,
     allow_incomplete: bool,
+    minimum_hours: str | None,
+    minimum_active_seconds: int | None,
     active_seconds: int,
     work_bounds: list[tuple[datetime, datetime, int]],
     agent_bounds: list[tuple[datetime, datetime, str, int]],
@@ -1661,14 +1851,27 @@ def validate_timing_and_status(
             target_id, "target_id", "campaign.yaml", run_id, errors
         )
 
-    minimum_hours = nested(data, "timing.minimum_hours", errors)
-    if minimum_hours != MINIMUM_HOURS:
-        errors.append(f"timing.minimum_hours must equal {MINIMUM_HOURS}")
-    if started is not None and earliest is not None:
-        if earliest - started != timedelta(hours=MINIMUM_HOURS):
+    if (
+        started is not None
+        and earliest is not None
+        and minimum_hours is not None
+        and minimum_active_seconds is not None
+    ):
+        try:
+            expected_earliest = started + timedelta(seconds=minimum_active_seconds)
+        except OverflowError:
             errors.append(
-                "earliest_finalization_at must be exactly eight hours after started_at"
+                f"selected duration {minimum_hours} hours "
+                f"({minimum_active_seconds} seconds) cannot be represented as a "
+                "finalization timestamp"
             )
+        else:
+            if earliest != expected_earliest:
+                errors.append(
+                    "earliest_finalization_at must be exactly "
+                    f"{minimum_hours} hours ({minimum_active_seconds} seconds) "
+                    "after started_at"
+                )
     if started is not None and last_checkpoint is not None and last_checkpoint < started:
         errors.append("last_checkpoint_at predates started_at")
     if started is not None and last_resumed is not None and last_resumed < started:
@@ -1788,12 +1991,25 @@ def validate_timing_and_status(
             and terminal_at is not None
             and terminal_at < earliest
         ):
+            if minimum_hours is not None and minimum_active_seconds is not None:
+                errors.append(
+                    "voluntary terminal status occurs before the selected "
+                    f"wall-clock floor of {minimum_hours} hours "
+                    f"({minimum_active_seconds} seconds)"
+                )
+            else:
+                errors.append(
+                    "voluntary terminal status occurs before the recorded "
+                    "wall-clock floor"
+                )
+        if (
+            minimum_active_seconds is not None
+            and active_seconds < minimum_active_seconds
+        ):
             errors.append(
-                "voluntary terminal status occurs before the wall-clock floor"
-            )
-        if active_seconds < MINIMUM_ACTIVE_SECONDS:
-            errors.append(
-                "voluntary terminal status requires at least 28,800 active-work seconds"
+                "voluntary terminal status requires at least "
+                f"{minimum_active_seconds:,} active-work seconds for the selected "
+                f"minimum of {minimum_hours} hours"
             )
     if status == "complete":
         freeze_at = parse_datetime(
@@ -2051,7 +2267,13 @@ def _validate_campaign_impl(run_dir: Path, allow_incomplete: bool) -> list[str]:
 
     status_value = nested(data, "status.value", errors)
     status = status_value if isinstance(status_value, str) else None
-    repository_root, run_id = validate_identity(data, run_dir, errors)
+    repository_root, run_id, schema_version = validate_identity(
+        data, run_dir, errors
+    )
+    minimum_hours, minimum_active_seconds = validate_duration_contract(
+        data, schema_version, errors
+    )
+    validate_initial_duration_checkpoint(data, run_dir, schema_version, errors)
     (
         selected_model,
         selected_reasoning,
@@ -2067,8 +2289,13 @@ def _validate_campaign_impl(run_dir: Path, allow_incomplete: bool) -> list[str]:
     agent_records = load_jsonl(run_dir / "agent-runs.jsonl", errors)
     round_records = load_jsonl(run_dir / "rounds.jsonl", errors)
     audit_records = load_jsonl(run_dir / "audits.jsonl", errors)
-    active_seconds, _, work_bounds = validate_work_intervals(
-        work_records, run_dir, run_id, data, errors
+    active_seconds, _, work_bounds, active_floor_reached_at = validate_work_intervals(
+        work_records,
+        run_dir,
+        run_id,
+        data,
+        minimum_active_seconds,
+        errors,
     )
     round_bounds = validate_rounds(
         round_records,
@@ -2076,6 +2303,7 @@ def _validate_campaign_impl(run_dir: Path, allow_incomplete: bool) -> list[str]:
         run_id,
         data,
         status,
+        active_floor_reached_at,
         errors,
     )
     agents, _, agent_bounds = validate_agent_runs(
@@ -2113,6 +2341,8 @@ def _validate_campaign_impl(run_dir: Path, allow_incomplete: bool) -> list[str]:
         run_id,
         status,
         allow_incomplete,
+        minimum_hours,
+        minimum_active_seconds,
         active_seconds,
         work_bounds,
         agent_bounds,

@@ -38,7 +38,7 @@ Use timestamps with time zone information.
 
 ## `campaign.yaml`
 
-Record these fields:
+Write new campaigns with `schema_version: 2` and record these fields:
 
 ```yaml
 schema_version:
@@ -72,7 +72,9 @@ policies:
   external_consultation:
   max_execution_minutes:
 timing:
+  duration_source:
   minimum_hours:
+  minimum_active_seconds:
   active_work_seconds:
   paused_seconds:
   last_resumed_at:
@@ -102,6 +104,31 @@ managed_repository:
   detection_basis:
   handoff_completed:
 ```
+
+For schema version 2, set `timing.duration_source` to `default` only after the
+user explicitly accepts the offered eight-hour default; set it to
+`user_override` whenever `--minimum-hours` is supplied. Store
+`timing.minimum_hours` as a canonical base-10 decimal string and
+`timing.minimum_active_seconds` as the exact positive integer obtained by
+multiplying those hours by 3,600. The canonical decimal has no sign,
+exponent, redundant leading zeros, or redundant fractional trailing zeros.
+Require `"8"` and 28,800 seconds when the source is `default`. A
+`user_override` may explicitly select the same duration. Reject a value rather
+than rounding it when the product is not a whole number of seconds or its
+finalization timestamp cannot be represented. Once `started_at` is recorded,
+treat all three duration fields and `earliest_finalization_at` as immutable.
+The initializer copies the run ID, start time, duration tuple, and earliest
+finalization timestamp into `checkpoints/0000-prepared.md`. Preserve that
+checkpoint unchanged; the validator cross-checks it against `campaign.yaml`
+so a later duration edit is rejected.
+
+Continue to validate legacy `schema_version: 1` campaign records under their
+original fixed semantics: `timing.minimum_hours` is 8,
+`earliest_finalization_at` is exactly eight hours after `started_at`, and a
+voluntary terminal close requires at least 28,800 active-work seconds. Version
+1 has no `duration_source` or `minimum_active_seconds`; do not rewrite
+historical records merely to add them. All newly initialized records use
+version 2.
 
 Set `requested_policy` to “strongest available Codex GPT and that model's
 highest supported reasoning setting.” Resolve the setting from current
@@ -159,22 +186,26 @@ cannot be inferred perfectly from arbitrary URLs, the root solver and final
 auditors must still inspect every row semantically; structural validation is
 not permission to retrieve.
 
-Set `earliest_finalization_at` exactly eight hours after `started_at`. Maintain
+For version 2, set `earliest_finalization_at` exactly
+`timing.minimum_active_seconds` seconds after `started_at`. Maintain
 checkpointed active-work intervals, cumulative `active_work_seconds`, paused
 time, and the last resume time. Exclude user waits, permission waits, and idle
-waiting. A voluntary terminal close requires both the wall-clock floor and at
-least 28,800 active-work seconds. Record `status.terminal_at` when terminal and
-validate the floor against that immutable timestamp, not against a later
-validation time. Every recorded interval, agent run, round, and audit must lie
-between campaign start and terminal time (or the present for a checkpoint).
+waiting. A voluntary terminal close requires both the recorded wall-clock
+floor and at least `timing.minimum_active_seconds` active-work seconds. Record
+`status.terminal_at` when terminal and validate the floor against that
+immutable timestamp, not against a later validation time. Every recorded
+interval, agent run, round, and audit must lie between campaign start and
+terminal time (or the present for a checkpoint).
 Permit an earlier terminal close only for an explicit user stop or an
 unavoidable permission, credential, capability, environment, or required-tool
 blocker. Record its structured `interruption_kind` and a repository-local
-evidence artifact. After the minimum, record each materially productive
-continuation round. For an incomplete terminal close, require all active routes
-to be explicitly refuted or blocked, a run-namespaced obstruction ID, the same
-terminal obstruction to survive three consecutive post-minimum
-rediversification or audit rounds, and
+evidence artifact. Define the post-minimum boundary as the later of
+`earliest_finalization_at` and the timestamp at which cumulative countable
+active work first reaches `timing.minimum_active_seconds`. After that boundary,
+record each materially productive continuation round. For an incomplete
+terminal close, require all active routes to be explicitly refuted or blocked,
+a run-namespaced obstruction ID, the same terminal obstruction to survive
+three consecutive post-minimum rediversification or audit rounds, and
 `no_defensible_next_step: true`.
 
 Use nonterminal `status.value` values `prepared`, `running`, or `paused`. Use
@@ -208,10 +239,12 @@ kind (`research`, `rediversification`, `audit`, or `repair`), start, end,
 `materially_productive`, `terminal_obstruction_survived`, namespaced
 obstruction ID when applicable, `defensible_next_step`, a concrete material
 result, and a confined evidence-artifact path. Rounds are chronological and
-nonoverlapping. Recompute `productive_rounds_after_minimum` from post-minimum
-productive records. Recompute `terminal_obstruction_rounds` from the final
-consecutive suffix of post-minimum, nonproductive rediversification/audit
-records that preserve the same obstruction and expose no defensible next step.
+nonoverlapping. Count a record as post-minimum only when it starts at or after
+the later of the wall-clock and cumulative-active-work boundaries. Recompute
+`productive_rounds_after_minimum` from those post-minimum productive records.
+Recompute `terminal_obstruction_rounds` from the final consecutive suffix of
+post-minimum, nonproductive rediversification/audit records that preserve the
+same obstruction and expose no defensible next step.
 
 For `audits.jsonl`, record audit ID, auditor ID, context ID, authoring
 involvement, candidate artifact/version/SHA-256, contract version/SHA-256,

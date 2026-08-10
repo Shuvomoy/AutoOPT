@@ -63,10 +63,20 @@ Select `solve-with-highest-reasoning` only when all of these conditions hold:
 - direct repository exploration or installed local tools materially benefit
   the work;
 - the user accepts active Goal mode, an equivalent persistent mechanism, or the
-  skill's disclosed checkpointed fallback when neither is available, plus a
-  minimum of eight wall-clock hours and 28,800 logged active-work seconds
-  before voluntary finalization and a 180-minute ceiling for each code or
-  solver execution.
+  skill's disclosed checkpointed fallback when neither is available, plus its
+  user-confirmed minimum-duration contract and a 180-minute ceiling for each
+  code or solver execution. The duration defaults to eight elapsed wall-clock
+  hours and 28,800 logged active-work seconds; a user override of `h` hours
+  requires both `h` elapsed wall-clock hours and `h * 3600` logged active-work
+  seconds.
+
+Before Goal setup, repository grounding, campaign initialization, or clock
+start, load the native skill and let it resolve and freeze the duration. If the
+explicit invocation already contains a valid duration, acknowledge the
+effective wall-clock and active-work floors without asking again. Otherwise,
+present the native skill's default-duration notice, ask whether to use the
+default or a custom duration in hours, and wait for an explicit answer. The
+router must preserve the selected floor and must not weaken or reinterpret it.
 
 Explicit invocation makes the native route eligible; it does not waive the
 native route approval gate. Exclude the native route when the requested purpose
@@ -118,12 +128,14 @@ large dump.
 
 For `solve-with-highest-reasoning`, create no upload package. Pass the exact
 Stage 2 target, repository root, Stage 1 seed artifacts, admissible output, and
-approved discovery boundaries to the native skill. Let that skill inspect the
-repository and build its local problem contract and source manifest. It may
-identify and read additional files within the approved repository and source
-scope without another route gate. Require renewed approval before changing the
-target, using another repository root, widening the source boundary, or making
-any external transfer.
+approved discovery boundaries to the native skill together with the confirmed
+duration source, minimum wall-clock hours, and minimum active-work seconds. Let
+that skill inspect the repository and build its local problem contract and
+source manifest. It may identify and read additional files within the approved
+repository and source scope without another route gate. Require renewed
+approval before changing the target, using another repository root, widening
+the source boundary, or making any external transfer. Never change or weaken
+the frozen duration.
 
 ## External Route Approval Gate
 
@@ -163,7 +175,8 @@ Explicit invocation: <confirmed current user invocation of $solve-with-highest-r
 Persistence: <active Goal mode | equivalent persistent mechanism | disclosed checkpointed fallback when neither native nor equivalent persistence is available>
 Capability: <strongest available Codex GPT and its highest supported reasoning setting>
 Downgrade policy: no silent downgrade
-Duration contract: at least 8 wall-clock hours and 28,800 logged active-work seconds
+Duration confirmation: <explicit invocation value acknowledged | user selected default | user supplied override>
+Duration contract: <h elapsed wall-clock hours and h * 3600 logged active-work seconds; default h = 8 and 28,800 seconds>
 Execution ceiling: 180 minutes per code or solver execution
 Repository root and Stage 1 seeds: <root plus exact initial artifact paths>
 Discovery boundary: <approved repository and source scope>
@@ -205,12 +218,14 @@ For the `solve-with-highest-reasoning` route:
 2. Load the `solve-with-highest-reasoning` skill and follow its persistence,
    capability, repository-grounding, campaign-record, source-boundary,
    computation, audit, and stopping rules.
-3. Hand it the approved target, repository root, Stage 1 seed artifacts,
-   discovery boundaries, admissible output, tools, write scope, and archive
-   destinations.
-4. Permit local repository exploration and use of installed tools only within
+3. Before Goal setup or repository grounding, let it resolve and freeze the
+   user-confirmed duration. Preserve that selected floor throughout routing.
+4. Hand it the approved target, repository root, Stage 1 seed artifacts,
+   discovery boundaries, admissible output, duration contract, tools, write
+   scope, and archive destinations.
+5. Permit local repository exploration and use of installed tools only within
    those approved boundaries.
-5. Do not let the native campaign recursively invoke `frontier-llm-consult`,
+6. Do not let the native campaign recursively invoke `frontier-llm-consult`,
    ChatGPT Web, or another external-model backend. Any such use requires a
    separately authorized workflow under its own approval and outgoing-context
    rules.
@@ -270,10 +285,11 @@ record first, then write or refresh the compact Stage 2 artifacts above before
 summarizing it. Check each candidate against the available numerical and
 structural data and present the applicable Stage 2 researcher gate.
 
-Do not promote a claim because eight hours elapsed, subagents agreed, audits
-were recorded, or the campaign record validator passed. A native-route
-candidate remains `Conjectured` or `Needs check` unless an independently
-accepted ordinary proof or formal verification supports promotion.
+Do not promote a claim because the selected duration floor was satisfied,
+subagents agreed, audits were recorded, or the campaign record validator
+passed. A native-route candidate remains `Conjectured` or `Needs check` unless
+an independently accepted ordinary proof or formal verification supports
+promotion.
 
 Do not ask the model to re-check itself and then report that as verification.
 Model re-examination is only another candidate-generating step.
