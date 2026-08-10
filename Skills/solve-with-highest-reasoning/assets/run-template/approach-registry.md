@@ -7,4 +7,3 @@
 
 Use problem-adaptive families. Mark duplicated formulations, theorem-strength
 gaps, refutations, and negative results explicitly.
-
