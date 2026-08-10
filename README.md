@@ -9,7 +9,7 @@ A preprint of the work is available on Optimization Online at the link: [https:/
 
 
 
-![AutoOPT pipeline with repository grounding, numerical algorithm design, symbolic fitting, Lean verification, and human approval gates](Skills/assets/autoopt-pipeline.png)
+![AutoOPT pipeline with repository grounding, numerical algorithm design, symbolic fitting, Lean verification, and human approval gates](assets/autoopt-pipeline.png)
 
 
 ## Repository contents
