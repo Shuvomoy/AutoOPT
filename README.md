@@ -3,9 +3,9 @@
 This repository contains the user `skill`s and Lean verification code for the following paper: 
 
 
-> Heechang Kim, Ernest K. Ryu, Shuvomoy Das Gupta, "A Domain-Specific Harness for End-to-End Automation of Optimization Research"
+> Heechang Kim, Ernest K. Ryu, Shuvomoy Das Gupta, "A Domain-Specific Harness for End-to-End Automation of Optimization Research", 2026.
 
-A preprint of the work is available on Optimization Online at the link: [https://optimization-online.org/2026/08/a-domain-specific-harness-for-end-to-end-automation-of-optimization-research/](https://optimization-online.org/2026/08/a-domain-specific-harness-for-end-to-end-automation-of-optimization-research/)
+A preprint of the work is available on arXiv at the link: [https://arxiv.org/abs/2608.07407](https://arxiv.org/abs/2608.07407).
 
 
 
