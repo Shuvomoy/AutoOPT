@@ -7,6 +7,18 @@ This repository contains the user `skill`s and Lean verification code for the fo
 
 A preprint of the work is available on arXiv at the link: [https://arxiv.org/abs/2608.07407](https://arxiv.org/abs/2608.07407).
 
+If you find the code helpful in you project, we kindly request that you cite the following paper:
+```tex
+@misc{AutoOPT2026,
+  author = {Kim, Heechang and Ryu, Ernest K. and Das Gupta, Shuvomoy},
+  title = {A Domain-Specific Harness for End-to-End Automation of Optimization Research},
+  year = {2026},
+  archivePrefix = {arXiv},
+  eprint = {2608.07407},
+  primaryClass = {math.OC},
+}
+```
+
 
 
 ![AutoOPT pipeline with repository grounding, numerical algorithm design, symbolic fitting, Lean verification, and human approval gates](assets/autoopt-pipeline.png)
@@ -58,14 +70,11 @@ and their feasibility proofs. Note that in the paper we provide the slightly mor
 
 ## Installing `AutoOPT`
 
-You can install `AutoOPT` skills in two ways: (i) by installing the skills manually, 
-(ii) by installing the `AutoOPT` plugin (new!). 
+To run  `AutoOPT` we first need to install a few prerequisites first. We can install `AutoOPT` skills in two ways: (i) by installing the skills manually,  (ii) by installing the `AutoOPT` plugin (new!). 
 
-### Runtime prerequisites
+### Install runtime prerequisites
 
-`AutoOPT` requires the following prerequisites. You can either install them before
-installing `AutoOPT`, or  install `AutoOPT` 
-first, and then from the agent (e.g., `Codex`)  just ask it to install the prerequisites).
+`AutoOPT`  requires a few runtime prerequisites. You can either install them before installing `AutoOPT`, or  install `AutoOPT`  first, and then from the agent (e.g., `Codex`)  just ask it to install the prerequisites.
 
 The prerequisites are:
 
@@ -76,40 +85,24 @@ The prerequisites are:
 * Lean, Lake, the required mathlib project
 * Comparator or Landrun tooling 
 
-### Install the AutoOPT skills manually
+### Install `AutoOPT` via `Skills` folder 
 
-First, please see the
-[Skills/README.md](Skills/README.md) for more details about the skills.
+The easiest way is actually just downloading the repository locally on your computer, start Codex (or whatever agent that you like) from that folder and then ask Codex to install the skills located in the `Skills` folder!
 
-Copy or symlink the required directories from [`Skills/`](Skills/) into a
-location scanned by your agent. For Codex, use `$HOME/.agents/skills/` for
-user-wide installation or `<repository-root>/.agents/skills/` for
-repository-scoped installation; for Claude Code, use `~/.claude/skills/` for
-user-wide installation. In Codex CLI or the IDE extension, run `/skills` to
-confirm discovery, invoke a skill as `$skill-name`, and restart Codex if an
-installed skill does not appear.
+If you like doing things manually, then please copy or symlink the required directories from [`Skills/`](Skills/) into a location scanned by your agent. For Codex, use `$HOME/.agents/skills/` for user-wide installation or `<repository-root>/.agents/skills/` for repository-scoped installation; for Claude Code, use `~/.claude/skills/` for user-wide installation. In Codex CLI or the IDE extension, run `/skills` to confirm discovery, invoke a skill as `$skill-name`, and restart Codex if an installed skill does not appear.
 
-### *NEW!* Install the packaged Codex plugin
+### *[NEW!] Alternative way to install `AutoOPT` via plugin* 
 
-We have made a plugin for Codex based on the new plugin standard!
+We have made a plugin for Codex based on the new plugin standard. However please keep in mind that plugin is a very recent open standard (Aug 7, 2026), and may be rough around the edges! 
 
-The packaged `autoopt` plugin is the portable installation for
-the Codex app and CLI. Codex plugin availability does not include the IDE
-extension. 
-
-From any directory, run these two
-commands to install the plugin directly from this GitHub repository:
+The packaged `autoopt` plugin is the portable installation for the Codex app and CLI. Codex plugin availability does not include the IDE extension. From any directory, run these two commands to install the plugin directly from this GitHub repository:
 
 ```sh
 codex plugin marketplace add https://github.com/Shuvomoy/AutoOPT
 codex plugin add autoopt@autoopt
 ```
 
-The first command asks Codex to fetch and register the marketplace stored in
-this repository. The second command installs the `autoopt` plugin from that
-marketplace.
-
-Verify the installation:
+The first command asks Codex to fetch and register the marketplace stored in this repository. The second command installs the `autoopt` plugin from that marketplace. Then Verify the installation:
 
 ```sh
 codex plugin list --marketplace autoopt --json
@@ -135,8 +128,6 @@ lake build
 cd Lean-Related/ITEM-f
 lake build
 ```
-
-
 
 
 ## Reporting issues
