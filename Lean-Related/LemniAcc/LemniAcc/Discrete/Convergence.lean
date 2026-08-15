@@ -188,6 +188,8 @@ theorem functionValue_rate_of_valid
 
 end Discrete
 
+namespace Internal
+
 /-- Both manuscript squared-gradient bounds for the canonical LemniAcc
 trajectory. -/
 theorem gradient_rate
@@ -219,7 +221,7 @@ theorem gradient_rate
     positivity
   have hv : 0 < Lemniscatic.varpi := Lemniscatic.varpi_pos
   have hΩ : 0 < omega N := omega_pos N
-  have hlower := (omega_bounds hN).1
+  have hlower := (Internal.omega_bounds hN).1
   change B ^ 2 / Lemniscatic.varpi ^ 2 < omega N at hlower
   have hscaled :
       B ^ 2 < omega N * Lemniscatic.varpi ^ 2 :=
@@ -279,7 +281,7 @@ theorem functionValue_rate
     positivity
   have hv : 0 < Lemniscatic.varpi := Lemniscatic.varpi_pos
   have hΩ : 0 < omega N := omega_pos N
-  have hlower := (omega_bounds hN).1
+  have hlower := (Internal.omega_bounds hN).1
   change B ^ 2 / Lemniscatic.varpi ^ 2 < omega N at hlower
   have hscaled :
       B ^ 2 < omega N * Lemniscatic.varpi ^ 2 :=
@@ -300,5 +302,7 @@ theorem functionValue_rate
         (Lemniscatic.varpi ^ 2 / (((N + 1 : Nat) : ℝ) ^ 2)) *
           (((M.L : ℝ) / 2) * ‖x0 - xStar‖ ^ 2) := hmul
     _ = _ := by ring
+
+end Internal
 
 end LemniAcc

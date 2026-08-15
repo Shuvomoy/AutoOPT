@@ -61,7 +61,7 @@ and mathlib 4.32.0:
   construction, algorithm, model, Lyapunov argument, and convergence result.
 
 Each project includes its Lean source, pinned Lake environment, theorem-facing
-`Challenge.lean` and `Solution.lean` wrappers, and an `AxiomAudit.lean` target.
+`Challenge.lean` and `Solution.lean` wrappers, and an `AxiomAudit.lean` target. 
 
 **Miscellaneous/Self-contained analytical proofs**. [`Selfcontained-PEP-proofs-for-Lemniscate-and-Itemf/`](Selfcontained-PEP-proofs-for-Lemniscate-and-Itemf/) folder located in the `Miscellaneous` folder
 contains self-contained PEP-based convergence proofs for  lemniscate acceleration and ITEM-f.  These documents are self-contained: they state the algorithms and rates, construct their parameters,
@@ -72,18 +72,19 @@ and their feasibility proofs. Note that in the paper we provide the slightly mor
 
 To run  `AutoOPT` we first need to install a few prerequisites first. We can install `AutoOPT` skills in two ways: (i) by installing the skills manually,  (ii) by installing the `AutoOPT` plugin (new!). 
 
-### Install runtime prerequisites
+### Install the  runtime prerequisites
 
-`AutoOPT`  requires a few runtime prerequisites. You can either install them before installing `AutoOPT`, or  install `AutoOPT`  first, and then from the agent (e.g., `Codex`)  just ask it to install the prerequisites.
+`AutoOPT`  requires a few  runtime prerequisites or tools. You can either install them before installing `AutoOPT`, or  install `AutoOPT`  first, and then from the agent (e.g., `Codex`)  just ask it to install the prerequisites, e.g., say something like `For using AutoOPT smoothly what are the tools that should be installed? Please show me the list and upon my approval, please install them`.
 
 The prerequisites are:
 
 * OpenAI Codex (or a similar agent)
-* Python 3.10 or newer 
+* Python 3.10 or newer (installing common popular packages like NumPy, SymPy  can be helpful) 
 * Julia 1.10 or newer, and Julia packages JuMP, Ipopt, Clarabel, Mosek, Gurobi, KNITRO (note that commerical solvers Mosek, Gurobi, KNITRO are optional)
 * Chrome extension Codex (or browser extension the agent in consideration)
 * Lean, Lake, the required mathlib project
 * Comparator or Landrun tooling 
+* Optional but recommended: [Wolfram Mathematica](https://www.wolfram.com/mathematica/) or [Wolfram Engine](https://www.wolfram.com/engine/) for symbolics. Though SymPy suffiices in many cases.
 
 ### Install `AutoOPT` via `Skills` folder 
 

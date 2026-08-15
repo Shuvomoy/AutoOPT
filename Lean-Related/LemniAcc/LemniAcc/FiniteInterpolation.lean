@@ -10,6 +10,8 @@ set_option autoImplicit false
 
 namespace LemniAcc
 
+namespace Internal
+
 theorem finite_interpolation
     {d n : Nat}
     (M : SmoothConvexModel (Euclidean d))
@@ -21,5 +23,7 @@ theorem finite_interpolation
         M.f (x i) := by
   intro i j
   exact M.interpolation (x i) (x j)
+
+end Internal
 
 end LemniAcc

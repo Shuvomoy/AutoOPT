@@ -739,6 +739,8 @@ theorem combined_endpoint_inequality
 
 end Continuous
 
+namespace Internal
+
 /-- Both manuscript endpoint bounds for a closed-interval continuous
 LemniAcc trajectory. -/
 theorem continuousTime_lyapunov
@@ -808,5 +810,7 @@ theorem continuousTime_lyapunov
   rw [hv4] at hgrad
   rw [hv2] at hfunction
   exact ⟨hgrad, hfunction⟩
+
+end Internal
 
 end LemniAcc

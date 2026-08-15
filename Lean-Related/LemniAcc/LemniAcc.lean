@@ -18,8 +18,9 @@ import LemniAcc.Discrete.LyapunovDecrement
 import LemniAcc.Discrete.Convergence
 
 /-!
-# LemniAcc
+# LemniAcc proof umbrella
 
-Umbrella import for the current-manuscript O010 formalization. Additional
-modules are added in dependency order as their proofs become compile-clean.
+This module imports the complete proof closure. The ten theorem-facing public
+names are introduced separately by `Solution.lean`; their implementations
+live under `LemniAcc.Internal`.
 -/

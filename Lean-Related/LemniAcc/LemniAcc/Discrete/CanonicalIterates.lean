@@ -20,18 +20,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 namespace Discrete
 
-/-- Position in the LemniAcc trajectory using the unique horizon-`N`
-coefficients. -/
-noncomputable def canonicalX
-    (N : Nat) (M : SmoothConvexModel E) (x0 : E) (k : Nat) : E :=
-  xIterate M (omega N) (rho N) x0 k
-
-/-- Momentum in the LemniAcc trajectory using the unique horizon-`N`
-coefficients. -/
-noncomputable def canonicalZ
-    (N : Nat) (M : SmoothConvexModel E) (x0 : E) (k : Nat) : E :=
-  zIterate M (omega N) (rho N) x0 k
-
 @[simp] theorem canonicalX_zero
     (N : Nat) (M : SmoothConvexModel E) (x0 : E) :
     canonicalX N M x0 0 = x0 :=
@@ -43,6 +31,8 @@ noncomputable def canonicalZ
   rfl
 
 end Discrete
+
+namespace Internal
 
 /-- The unique valid recurrence coefficients determine a unique LemniAcc
 trajectory, initialized by `x₀` and `z₀ = 0`, that obeys both manuscript
@@ -95,5 +85,7 @@ theorem iterates
     simpa [Discrete.canonicalX, Discrete.canonicalZ,
       Discrete.xIterate, Discrete.zIterate] using
         hother.trans hcanonical.symm
+
+end Internal
 
 end LemniAcc

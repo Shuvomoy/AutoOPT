@@ -241,11 +241,15 @@ lemma omega_strict_lower
   rw [div_lt_iff₀ (sq_pos_of_pos hvpos)]
   nlinarith
 
+namespace Internal
+
 /-- The two strict finite bounds on the unique recurrence parameter. -/
 theorem omega_bounds
     {N : Nat} (hN : 1 ≤ N) :
     ((N + 1 : Nat) : ℝ) ^ 2 / Lemniscatic.varpi ^ 2 < omega N ∧
       omega N < ((N + 1 : Nat) : ℝ) ^ 2 :=
   ⟨omega_strict_lower hN, omega_strict_upper hN⟩
+
+end Internal
 
 end LemniAcc

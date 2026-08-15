@@ -1,5 +1,6 @@
 import LemniAcc.Model
 import LemniAcc.Continuous.Coefficients
+import LemniAcc.Spec.Continuous
 import Mathlib.Analysis.Calculus.FDeriv.Extend
 
 open scoped InnerProductSpace Topology
@@ -13,28 +14,6 @@ open Lemniscatic
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E]
-
-/-- The exact trajectory interface used by the continuous-time theorem.
-
-The terminal identities are deliberately absent: they are consequences of
-the singular ODE, continuity, and the interior derivative identities. -/
-structure ContinuousTrajectory
-    (M : SmoothConvexModel E) (T : ℝ) (x0 : E) where
-  X : ℝ → E
-  V : ℝ → E
-  A : ℝ → E
-  X_continuous : ContinuousOn X (Icc (0 : ℝ) T)
-  V_continuous : ContinuousOn V (Icc (0 : ℝ) T)
-  A_continuous : ContinuousOn A (Icc (0 : ℝ) T)
-  X_derivative :
-    ∀ t ∈ Ioo (0 : ℝ) T, HasDerivAt X (V t) t
-  V_derivative :
-    ∀ t ∈ Ioo (0 : ℝ) T, HasDerivAt V (A t) t
-  ode :
-    ∀ t ∈ Ioo (0 : ℝ) T,
-      A t + gamma T t • V t + 2 • M.grad (X t) = 0
-  X_zero : X 0 = x0
-  V_zero : V 0 = 0
 
 theorem terminalDeltaLimit_to_leftLimit
     {T : ℝ} {c : ℝ → ℝ}

@@ -15,22 +15,6 @@ set_option autoImplicit false
 
 namespace LemniAcc
 
-/-- Coefficient data, extended by zero after the finite horizon. -/
-structure CoefficientData (N : Nat) where
-  omega : ℝ
-  rho : Nat → ℝ
-
-/-- The exact finite recurrence and its endpoint/order conditions. -/
-structure ValidCoefficients (N : Nat) (c : CoefficientData N) : Prop where
-  omega_pos : 0 < c.omega
-  rho_zero : c.rho 0 = 1
-  rho_terminal : c.rho (N + 1) = 0
-  rho_nonneg : ∀ k, k ≤ N + 1 → 0 ≤ c.rho k
-  rho_strict : ∀ k, k ≤ N → c.rho (k + 1) < c.rho k
-  recurrence : ∀ k, k ≤ N →
-    OneStepRel c.omega (c.rho k) (c.rho (k + 1))
-  rho_tail : ∀ k, N + 1 ≤ k → c.rho k = 0
-
 /-- The clipped shooting orbit from the left endpoint `1`. -/
 noncomputable def shooting (Ω : ℝ) : Nat → ℝ
   | 0 => 1
@@ -531,6 +515,8 @@ lemma validCoefficients_unique
   cases d
   simp_all
 
+namespace Internal
+
 /-- Existence and uniqueness of the recurrence coefficients for every natural
 horizon, including the exact base value `Ω₀ = 1`. -/
 theorem recurrence_existsUnique (N : Nat) :
@@ -540,26 +526,18 @@ theorem recurrence_existsUnique (N : Nat) :
   intro d hd
   exact validCoefficients_unique hd hc
 
-/-- The canonical coefficient data selected from the unique existence theorem. -/
-noncomputable def canonicalCoefficients (N : Nat) : CoefficientData N :=
-  (recurrence_existsUnique N).exists.choose
+end Internal
 
 theorem canonicalCoefficients_valid (N : Nat) :
-    ValidCoefficients N (canonicalCoefficients N) :=
-  (recurrence_existsUnique N).exists.choose_spec
+    ValidCoefficients N (canonicalCoefficients N) := by
+  classical
+  rw [canonicalCoefficients, dif_pos (Internal.recurrence_existsUnique N).exists]
+  exact (Internal.recurrence_existsUnique N).exists.choose_spec
 
 theorem validCoefficients_eq_canonical
     {N : Nat} {c : CoefficientData N} (hc : ValidCoefficients N c) :
     c = canonicalCoefficients N :=
-  (recurrence_existsUnique N).unique hc (canonicalCoefficients_valid N)
-
-/-- The unique recurrence parameter at horizon `N`. -/
-noncomputable def omega (N : Nat) : ℝ :=
-  (canonicalCoefficients N).omega
-
-/-- The unique recurrence sequence at horizon `N`, extended by zero. -/
-noncomputable def rho (N k : Nat) : ℝ :=
-  (canonicalCoefficients N).rho k
+  (Internal.recurrence_existsUnique N).unique hc (canonicalCoefficients_valid N)
 
 theorem omega_pos (N : Nat) : 0 < omega N :=
   (canonicalCoefficients_valid N).omega_pos

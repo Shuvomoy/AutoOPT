@@ -1,4 +1,4 @@
-import Mathlib
+import LemniAcc.Spec.Lemniscatic
 
 /-!
 # The lemniscatic integral
@@ -15,22 +15,6 @@ open Set MeasureTheory intervalIntegral
 set_option autoImplicit false
 
 namespace LemniAcc.Lemniscatic
-
-/-- The density in the defining integral of the lemniscatic sine. -/
-noncomputable def arcslIntegrand (x : ℝ) : ℝ :=
-  (Real.sqrt (1 - x ^ 4))⁻¹
-
-/-- The inverse coordinate whose inverse on `[0,1]` is the lemniscatic sine. -/
-noncomputable def arcsl (u : ℝ) : ℝ :=
-  ∫ x in (0 : ℝ)..u, arcslIntegrand x
-
-/-- The lemniscate constant `varpi = 2 ∫₀¹ (1-x⁴)⁻¹/² dx`. -/
-noncomputable def varpi : ℝ :=
-  2 * arcsl 1
-
-/-- The comparison kernel appearing in the finite omega bound. -/
-noncomputable def omegaKernel (x : ℝ) : ℝ :=
-  (Real.sqrt (x * (1 - x ^ 2)))⁻¹
 
 @[simp] theorem arcsl_zero : arcsl 0 = 0 := by
   simp [arcsl]

@@ -22,30 +22,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 namespace Discrete
 
-/-- The coefficient `(1-r)²/(2r)` of the terminal-to-minimizer gap. -/
-noncomputable def terminalCoeff (r : ℝ) : ℝ :=
-  (1 - r) ^ 2 / (2 * r)
-
-/-- The manuscript term `D_{k-1,⋆}`, with its genuine zero-horizon value. -/
-noncomputable def previousGap
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 xStar : E) : Nat → ℝ
-  | 0 => 0
-  | k + 1 => gap M (xIterate M Ω ρ x0 k) xStar
-
-/-- The discrete Lyapunov sequence from the manuscript. -/
-noncomputable def lyapunov
-    (M : SmoothConvexModel E) (N : Nat) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 xStar : E) (k : Nat) : ℝ :=
-  minusCoeff (ρ k) * previousGap M Ω ρ x0 xStar k
-    - terminalCoeff (ρ k) * gap M (xIterate M Ω ρ x0 N) xStar
-    + ((M.L : ℝ) / (2 * Ω)) *
-        ‖xIterate M Ω ρ x0 k - xStar
-          + positionCoeff (ρ (k + 1)) • zIterate M Ω ρ x0 k‖ ^ 2
-    - ((M.L : ℝ) / (2 * Ω)) *
-        ‖corrected M (xIterate M Ω ρ x0 N) - xStar
-          + zIterate M Ω ρ x0 k‖ ^ 2
-
 /-- Solving the last position update gives the endpoint vector identity used
 in the terminal Lyapunov expansion. -/
 theorem terminal_vector_identity
@@ -322,6 +298,8 @@ theorem lyapunov_terminal_lower_of_valid
 
 end Discrete
 
+namespace Internal
+
 /-- The canonical terminal Lyapunov value has the exact four-term
 decomposition stated in the manuscript. -/
 theorem lyapunov_terminal
@@ -345,5 +323,7 @@ theorem lyapunov_terminal
   simpa [omega, rho] using
     Discrete.lyapunov_terminal_of_valid N hN
       (canonicalCoefficients_valid N) M x0 xStar hxStar
+
+end Internal
 
 end LemniAcc

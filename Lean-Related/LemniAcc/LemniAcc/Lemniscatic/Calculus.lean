@@ -136,7 +136,7 @@ noncomputable def arcslOrderIso :
 
 private noncomputable def angleClamp
     (x : ℝ) : Icc (0 : ℝ) (varpi / 2) :=
-  ⟨min (max x 0) (varpi / 2),
+  ⟨angleClampValue x,
     le_min (le_max_right _ _) (div_nonneg varpi_pos.le (by norm_num)),
     min_le_right _ _⟩
 
@@ -144,16 +144,27 @@ private theorem angleClamp_eq {x : ℝ}
     (hx : x ∈ Icc (0 : ℝ) (varpi / 2)) :
     angleClamp x = ⟨x, hx⟩ := by
   apply Subtype.ext
-  simp [angleClamp, max_eq_left hx.1, min_eq_left hx.2]
+  simp [angleClamp, angleClampValue, max_eq_left hx.1, min_eq_left hx.2]
 
-/-- The lemniscatic sine, extended constantly outside its defining
-closed interval. -/
-noncomputable def sl (x : ℝ) : ℝ :=
-  (arcslOrderIso.symm (angleClamp x) : Icc (0 : ℝ) 1)
+private theorem sl_preimage_exists (x : ℝ) :
+    ∃ u : ℝ,
+      u ∈ Icc (0 : ℝ) 1 ∧ arcsl u = angleClampValue x := by
+  let u : Icc (0 : ℝ) 1 := arcslOrderIso.symm (angleClamp x)
+  refine ⟨u, u.2, ?_⟩
+  have happly := arcslOrderIso.apply_symm_apply (angleClamp x)
+  exact congrArg Subtype.val happly
 
-/-- The lemniscatic cosine as the reflected lemniscatic sine. -/
-noncomputable def cl (x : ℝ) : ℝ :=
-  sl (varpi / 2 - x)
+private theorem sl_eq_orderIso (x : ℝ) :
+    sl x = (arcslOrderIso.symm (angleClamp x) : Icc (0 : ℝ) 1) := by
+  classical
+  rw [sl, dif_pos (sl_preimage_exists x)]
+  apply arcsl_strictMonoOn.injOn
+  · exact (Classical.choose_spec (sl_preimage_exists x)).1
+  · exact (arcslOrderIso.symm (angleClamp x)).2
+  · have hchosen := (Classical.choose_spec (sl_preimage_exists x)).2
+    have hinverse := congrArg Subtype.val
+      (arcslOrderIso.apply_symm_apply (angleClamp x))
+    exact hchosen.trans hinverse.symm
 
 @[simp] theorem arcsl_sl {x : ℝ}
     (hx : x ∈ Icc (0 : ℝ) (varpi / 2)) :
@@ -161,6 +172,7 @@ noncomputable def cl (x : ℝ) : ℝ :=
   have hclamp := angleClamp_eq hx
   have happly :=
     arcslOrderIso.apply_symm_apply (⟨x, hx⟩ : Icc (0 : ℝ) (varpi / 2))
+  rw [sl_eq_orderIso]
   change (arcslOrderIso (arcslOrderIso.symm (angleClamp x))).1 = x
   rw [hclamp]
   exact congrArg Subtype.val happly
@@ -171,6 +183,7 @@ noncomputable def cl (x : ℝ) : ℝ :=
   have hclamp := angleClamp_eq hmem
   have hinv :=
     arcslOrderIso.symm_apply_apply (⟨u, hu⟩ : Icc (0 : ℝ) 1)
+  rw [sl_eq_orderIso]
   change (arcslOrderIso.symm (angleClamp (arcsl u))).1 = u
   rw [hclamp]
   exact congrArg Subtype.val hinv
@@ -183,13 +196,16 @@ noncomputable def cl (x : ℝ) : ℝ :=
     sl_arcsl (u := (1 : ℝ)) (right_mem_Icc.2 zero_le_one)
 
 theorem sl_mem_Icc (x : ℝ) : sl x ∈ Icc (0 : ℝ) 1 :=
-  (arcslOrderIso.symm (angleClamp x)).2
+  sl_eq_orderIso x ▸ (arcslOrderIso.symm (angleClamp x)).2
 
 private theorem angleClamp_continuous : Continuous angleClamp := by
   exact (by fun_prop : Continuous fun x : ℝ =>
     min (max x 0) (varpi / 2)).subtype_mk _
 
 theorem sl_continuous : Continuous sl := by
+  rw [show sl = fun x : ℝ =>
+      (arcslOrderIso.symm (angleClamp x)).1 from
+    funext sl_eq_orderIso]
   exact continuous_subtype_val.comp
     (arcslOrderIso.toHomeomorph.continuous_invFun.comp angleClamp_continuous)
 
@@ -198,9 +214,7 @@ theorem sl_strictMonoOn :
   intro x hx y hy hxy
   have hcx := angleClamp_eq hx
   have hcy := angleClamp_eq hy
-  change
-    (arcslOrderIso.symm (angleClamp x)).1 <
-      (arcslOrderIso.symm (angleClamp y)).1
+  rw [sl_eq_orderIso, sl_eq_orderIso]
   rw [hcx, hcy]
   exact arcslOrderIso.symm.strictMono hxy
 

@@ -1,4 +1,4 @@
-import LemniAcc
+import Solution
 
 /-!
 This file grows with the public theorem surface while retaining a compile-clean

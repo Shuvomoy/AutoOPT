@@ -21,24 +21,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 namespace Discrete
 
-/-- The gap `D_{k-1,k}` for a positive index, and the genuine value zero for
-the zero-th decrement. -/
-noncomputable def previousCurrentGap
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 : E) : Nat → ℝ
-  | 0 => 0
-  | k + 1 =>
-      gap M (xIterate M Ω ρ x0 k) (xIterate M Ω ρ x0 (k + 1))
-
-/-- The closed nonnegative-gap expression for one Lyapunov decrement. -/
-noncomputable def decrementExpression
-    (M : SmoothConvexModel E) (N : Nat) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 xStar : E) (k : Nat) : ℝ :=
-  minusCoeff (ρ k) * previousCurrentGap M Ω ρ x0 k
-    + (ρ k - ρ (k + 1)) * gap M xStar (xIterate M Ω ρ x0 k)
-    + (plusCoeff (ρ (k + 1)) - plusCoeff (ρ k)) *
-        gap M (xIterate M Ω ρ x0 N) (xIterate M Ω ρ x0 k)
-
 /-- Difference of the two quadratic energy pairs under affine gradient
 updates. -/
 theorem two_energy_difference
@@ -497,6 +479,8 @@ theorem lyapunov_decrement_of_valid
 
 end Discrete
 
+namespace Internal
+
 /-- The canonical LemniAcc Lyapunov sequence has the manuscript closed
 decrement, including its explicit zero-horizon branch, and is nonincreasing
 at every step before the terminal index. -/
@@ -527,5 +511,7 @@ theorem lyapunov_decrement
   simpa [Discrete.decrementExpression, omega, rho] using
     Discrete.lyapunov_decrement_of_valid N
       (canonicalCoefficients_valid N) M x0 xStar hxStar k hk
+
+end Internal
 
 end LemniAcc

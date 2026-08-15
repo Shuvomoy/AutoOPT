@@ -1,4 +1,4 @@
-import Mathlib
+import LemniAcc.Spec.Recurrence
 
 /-!
 # The scalar one-step map
@@ -17,27 +17,6 @@ open Set
 set_option autoImplicit false
 
 namespace LemniAcc
-
-/-- The polynomial one-step recurrence relation. -/
-def OneStepRel (Ω r t : ℝ) : Prop :=
-  Ω * (r - t) ^ 2 = r * (1 - t ^ 2)
-
-/-- The domain on which the lower root is admissible. -/
-def OneStepDomain (Ω r : ℝ) : Prop :=
-  0 < Ω ∧ 0 < r ∧ r ≤ 1 ∧ 1 ≤ Ω * r
-
-/-- The quarter-discriminant of the one-step quadratic. -/
-def oneStepDiscriminant (Ω r : ℝ) : ℝ :=
-  r ^ 2 + Ω * r * (1 - r ^ 2)
-
-/-- The lower root of the one-step quadratic before clipping. -/
-noncomputable def oneStepRaw (Ω r : ℝ) : ℝ :=
-  (Ω * r - Real.sqrt (oneStepDiscriminant Ω r)) / (Ω + r)
-
-/-- The total one-step shooting map.  The `max` makes failed shots stick at
-zero while leaving every admissible step unchanged. -/
-noncomputable def oneStep (Ω r : ℝ) : ℝ :=
-  max 0 (oneStepRaw Ω r)
 
 lemma oneStepDiscriminant_nonneg
     {Ω r : ℝ} (hΩ : 0 ≤ Ω) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) :

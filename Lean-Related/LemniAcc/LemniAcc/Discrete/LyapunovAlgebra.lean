@@ -1,4 +1,4 @@
-import Mathlib
+import LemniAcc.Spec.Discrete
 
 /-!
 # Scalar algebra for the LemniAcc Lyapunov sequence
@@ -11,18 +11,6 @@ is one step of the LemniAcc scalar recurrence.
 set_option autoImplicit false
 
 namespace LemniAcc.Discrete
-
-/-- The coefficient `(1-r²)/(2r)` appearing in the Lyapunov sequence. -/
-noncomputable def minusCoeff (r : ℝ) : ℝ :=
-  (1 - r ^ 2) / (2 * r)
-
-/-- The coefficient `(1+r²)/(2r)` appearing in the momentum update. -/
-noncomputable def plusCoeff (r : ℝ) : ℝ :=
-  (1 + r ^ 2) / (2 * r)
-
-/-- The coefficient `(1+r²)/(1-r²)` appearing in the position update. -/
-noncomputable def positionCoeff (r : ℝ) : ℝ :=
-  (1 + r ^ 2) / (1 - r ^ 2)
 
 /-- The first scalar identity in the proof of the closed decrement formula. -/
 theorem recurrence_scalar_identity_one

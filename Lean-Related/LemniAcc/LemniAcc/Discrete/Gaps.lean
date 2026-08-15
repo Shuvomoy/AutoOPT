@@ -1,4 +1,5 @@
 import LemniAcc.FiniteInterpolation
+import LemniAcc.Spec.Discrete
 
 /-!
 # Smooth-convex gaps used by the discrete Lyapunov proof
@@ -18,16 +19,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E]
 
 namespace Discrete
-
-/-- The smooth-convex interpolation gap between two actual sample points. -/
-noncomputable def gap
-    (M : SmoothConvexModel E) (x y : E) : ℝ :=
-  M.interpolationGap x y
-
-/-- A reciprocal-smoothness gradient step, denoted `x⁺` in the manuscript. -/
-noncomputable def corrected
-    (M : SmoothConvexModel E) (x : E) : E :=
-  M.gradientStep x
 
 /-- Every actual smooth-convex interpolation gap is nonnegative. -/
 theorem gap_nonneg

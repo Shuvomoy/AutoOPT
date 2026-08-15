@@ -21,29 +21,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 namespace Discrete
 
-/-- One step of the two-sequence form of LemniAcc. -/
-noncomputable def step
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (k : Nat) (state : E × E) : E × E :=
-  let x := state.1
-  let z := state.2
-  let zNext :=
-    z -
-      (Ω * (plusCoeff (ρ (k + 1)) - plusCoeff (ρ k)) *
-        (M.L : ℝ)⁻¹) • M.grad x
-  let xNext :=
-    M.gradientStep x +
-      (positionCoeff (ρ (k + 1)) - positionCoeff (ρ (k + 2))) • zNext
-  (xNext, zNext)
-
-/-- The canonical infinite recursion whose restriction gives every finite
-LemniAcc trajectory. -/
-noncomputable def iterateState
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 : E) : Nat → E × E
-  | 0 => (x0, 0)
-  | k + 1 => step M Ω ρ k (iterateState M Ω ρ x0 k)
-
 @[simp] theorem iterateState_zero
     (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ) (x0 : E) :
     iterateState M Ω ρ x0 0 = (x0, 0) :=
@@ -55,18 +32,6 @@ noncomputable def iterateState
     iterateState M Ω ρ x0 (k + 1) =
       step M Ω ρ k (iterateState M Ω ρ x0 k) :=
   rfl
-
-/-- The position component of the canonical LemniAcc recursion. -/
-noncomputable def xIterate
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 : E) (k : Nat) : E :=
-  (iterateState M Ω ρ x0 k).1
-
-/-- The momentum component of the canonical LemniAcc recursion. -/
-noncomputable def zIterate
-    (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ)
-    (x0 : E) (k : Nat) : E :=
-  (iterateState M Ω ρ x0 k).2
 
 @[simp] theorem xIterate_zero
     (M : SmoothConvexModel E) (Ω : ℝ) (ρ : Nat → ℝ) (x0 : E) :
